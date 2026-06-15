@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dive Planner DOMAR V19</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="brand">
+        <div class="mark">DP</div>
+        <div>
+          <h1>Dive Planner</h1>
+          <p>DOMAR/CBMPB • LND • GR • NGR • NR • TTF • Autonomia</p>
+        </div>
+      </div>
+      <div class="version-badge">V19</div>
+    </header>
+
+    <main>
+      <section id="paginaEntrada" class="page active">
+        <section class="dashboard">
+          <div class="panel hero-panel">
+            <div>
+              <h2>Dados do Mergulho</h2>
+              <p>Escolha a profundidade e o tempo de fundo.</p>
+            </div>
+            <div class="hero-status">
+              <span>Sequência</span>
+              <b>1º → IS → 2º → IS → 3º → IS → 4º</b>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title"><span>01</span><h2>1º Mergulho</h2></div>
+          <div class="card">
+            <div class="grid two">
+              <label>TCS (L/min)<input id="tcs" type="number" value="40" min="1" step="0.1"></label>
+              <label>Profundidade (m)<input id="prof1" type="number" value="5" min="1" step="0.5"></label>
+              <label>Pressão do cilindro principal (bar)<input id="pressaoPrincipal" type="number" value="200" min="1" step="1"></label>
+              <label>Pressão do Bail Out (bar)<input id="pressaoBailout" type="number" value="200" min="1" step="1"></label>
+              <label>Buscar município<input id="buscaMunicipio" type="search" placeholder="Digite parte do nome do município..."></label>
+              <label>Município<select id="municipio"></select></label>
+              <label>Altitude do local (m)<input id="altitude" type="number" value="0" min="0" step="10"></label>
+              <label>Tempo de fundo (min)<input id="tempo1" type="number" value="25" min="0" step="1"></label>
+              <label>Intervalo de superfície para o 2º
+                <select id="modoSi">
+                  <option value="minimo" selected>Menor IS</option>
+                  <option value="manual">Informar IS</option>
+                </select>
+              </label>
+              <label>IS após 1º mergulho (min)<input id="siManual" type="number" value="0" min="0" step="5"></label>
+            </div>
+            <div id="situacaoOperacional" class="situacao kpi-dashboard ok">
+              <div><b>LND:</b> <span id="previewLnd">—</span></div>
+              <div><b>Grupo Repetitivo:</b> <span id="previewGrupo">—</span></div>
+              <div><b>Aut. Principal:</b> <span id="previewAutP1">—</span></div>
+              <div><b>Aut. Bail Out:</b> <span id="previewAutB1">—</span></div>
+              <div><b>Aut. Remanescente:</b> <span id="previewAutRem1">—</span></div>
+              <div><b>IS:</b> <span id="previewSi1">—</span></div>
+              <div><b>Novo GR:</b> <span id="previewNgr1">—</span></div>
+              <div id="previewAlertas" class="preview-alertas"></div>
+            </div>
+            <small id="infoLnd" class="sr-only"></small>
+          </div>
+        </section>
+
+        <section id="secRep" class="panel">
+          <div class="panel-title"><span>02</span><h2>2º Mergulho</h2></div>
+          <label class="switch-line"><input type="checkbox" id="usarRep"> Planejar mergulho repetitivo</label>
+          <div class="card" id="repCampos">
+            <div class="grid two">
+              <label class="checkbox-line"><input type="checkbox" id="cilindroNovo"> Cilindro trocado para o 2º mergulho</label>
+              <label>Profundidade (m)<input id="prof2" type="number" value="5" min="1" step="0.5"></label>
+              <label>Tempo de fundo (min)<input id="tempo2" type="number" value="25" min="0" step="1"></label>
+              <label>Intervalo de superfície para o 3º
+                <select id="modoSi3">
+                  <option value="minimo" selected>Menor IS</option>
+                  <option value="manual">Informar IS</option>
+                </select>
+              </label>
+              <label>IS após 2º mergulho (min)<input id="siManual3" type="number" value="0" min="0" step="5"></label>
+            </div>
+            <div id="situacaoOperacional2" class="situacao kpi-dashboard ok">
+              <div><b>LND:</b> <span id="previewLnd2">—</span></div>
+              <div><b>NR anterior:</b> <span id="previewNrHerdado">—</span></div>
+              <div><b>TTF:</b> <span id="previewTtf2">—</span></div>
+              <div><b>Grupo Repetitivo:</b> <span id="previewGrupo2">—</span></div>
+              <div><b>IS:</b> <span id="previewSi2">—</span></div>
+              <div><b>Novo GR:</b> <span id="previewNgr2">—</span></div>
+              <div id="previewStatus2"><b>STATUS:</b> —</div>
+              <div id="previewAlertas2" class="preview-alertas"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="secTerceiro" class="panel">
+          <div class="panel-title"><span>03</span><h2>3º Mergulho</h2></div>
+          <label class="switch-line"><input type="checkbox" id="usarTerceiro"> Planejar 3º mergulho</label>
+          <div class="card" id="terCampos">
+            <div class="grid two">
+              <label class="checkbox-line"><input type="checkbox" id="cilindroNovo3"> Cilindro trocado para o 3º mergulho</label>
+              <label>Profundidade (m)<input id="prof3" type="number" value="5" min="1" step="0.5"></label>
+              <label>Tempo de fundo (min)<input id="tempo3" type="number" value="25" min="0" step="1"></label>
+              <label>Intervalo de superfície para o 4º
+                <select id="modoSi4">
+                  <option value="minimo" selected>Menor IS</option>
+                  <option value="manual">Informar IS</option>
+                </select>
+              </label>
+              <label>IS após 3º mergulho (min)<input id="siManual4" type="number" value="0" min="0" step="5"></label>
+            </div>
+            <div id="situacaoOperacional3" class="situacao kpi-dashboard ok">
+              <div><b>LND:</b> <span id="previewLnd3">—</span></div>
+              <div><b>NR anterior:</b> <span id="previewNrHerdado3">—</span></div>
+              <div><b>TTF:</b> <span id="previewTtf3">—</span></div>
+              <div><b>Grupo Repetitivo:</b> <span id="previewGrupo3">—</span></div>
+              <div><b>IS:</b> <span id="previewSi3">—</span></div>
+              <div><b>Novo GR:</b> <span id="previewNgr3">—</span></div>
+              <div id="previewStatus3"><b>STATUS:</b> —</div>
+              <div id="previewAlertas3" class="preview-alertas"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="secQuarto" class="panel">
+          <div class="panel-title"><span>04</span><h2>4º Mergulho</h2></div>
+          <label class="switch-line"><input type="checkbox" id="usarQuarto"> Planejar 4º mergulho</label>
+          <div class="card" id="quaCampos">
+            <div class="grid two">
+              <label class="checkbox-line"><input type="checkbox" id="cilindroNovo4"> Cilindro trocado para o 4º mergulho</label>
+              <label>Profundidade (m)<input id="prof4" type="number" value="5" min="1" step="0.5"></label>
+              <label>Tempo de fundo (min)<input id="tempo4" type="number" value="25" min="0" step="1"></label>
+            </div>
+            <div id="situacaoOperacional4" class="situacao kpi-dashboard ok">
+              <div><b>LND:</b> <span id="previewLnd4">—</span></div>
+              <div><b>NR anterior:</b> <span id="previewNrHerdado4">—</span></div>
+              <div><b>TTF:</b> <span id="previewTtf4">—</span></div>
+              <div><b>Grupo Repetitivo:</b> <span id="previewGrupo4">—</span></div>
+              <div id="previewStatus4"><b>STATUS:</b> —</div>
+              <div id="previewAlertas4" class="preview-alertas"></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="actions"><button id="btnCalcular">DIVE</button></div>
+      </section>
+
+      <section id="paginaResultado" class="page">
+        <section class="panel">
+          <div class="topbar">
+            <h2>Resultado do planejamento</h2>
+            <button id="btnVoltar" class="secondary">Alterar dados</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="card results">
+            <h3>1º mergulho</h3>
+            <div class="kpis compact">
+              <div><span>Profundidade corrigida</span><b id="profCorr1">—</b><small>m</small></div>
+              <div><span>Tempo de fundo</span><b id="tempoFundo1">—</b><small>min</small></div>
+              <div><span>Intervalo de superfície</span><b id="siUsado1">—</b><small></small></div>
+              <div><span>Novo grupo repetitivo</span><b id="grupoAposSi1">—</b><small></small></div>
+              <div><span>Nitrogênio residual</span><b id="nrPrimeiro">—</b><small></small></div>
+              <div><span>Pressão residual</span><b id="pressaoFinal1">—</b><small></small></div>
+            </div>
+            <p class="note" id="obs1"></p>
+          </div>
+        </section>
+
+        <section class="panel" id="secRepResultado" style="display:none">
+          <div class="card results">
+            <h3>2º mergulho repetitivo</h3>
+            <div class="kpis compact">
+              <div><span>Profundidade corrigida</span><b id="profCorr2">—</b><small>m</small></div>
+              <div><span>Tempo total de fundo</span><b id="tat2">—</b><small></small></div>
+              <div><span>Intervalo de superfície</span><b id="siUsado">—</b><small></small></div>
+              <div><span>Novo grupo repetitivo</span><b id="grupoAposSi">—</b><small></small></div>
+              <div><span>Nitrogênio residual</span><b id="rnt">—</b><small></small></div>
+              <div><span>Pressão residual</span><b id="pressaoFinal2">—</b><small></small></div>
+            </div>
+            <p class="note" id="obs2"></p>
+          </div>
+        </section>
+
+        <section class="panel" id="secRep3Resultado" style="display:none">
+          <div class="card results">
+            <h3>3º mergulho repetitivo</h3>
+            <div class="kpis compact">
+              <div><span>Profundidade corrigida</span><b id="profCorr3">—</b><small>m</small></div>
+              <div><span>Tempo total de fundo</span><b id="tat3">—</b><small></small></div>
+              <div><span>Intervalo de superfície</span><b id="siUsado3">—</b><small></small></div>
+              <div><span>Novo grupo repetitivo</span><b id="grupoAposSi3">—</b><small></small></div>
+              <div><span>Nitrogênio residual</span><b id="rnt3">—</b><small></small></div>
+              <div><span>Pressão residual</span><b id="pressaoFinal3">—</b><small></small></div>
+            </div>
+            <p class="note" id="obs3"></p>
+          </div>
+        </section>
+
+        <section class="panel" id="secRep4Resultado" style="display:none">
+          <div class="card results">
+            <h3>4º mergulho repetitivo</h3>
+            <div class="kpis compact">
+              <div><span>Profundidade corrigida</span><b id="profCorr4">—</b><small>m</small></div>
+              <div><span>Tempo total de fundo</span><b id="tat4">—</b><small></small></div>
+              <div><span>Intervalo de superfície</span><b id="siUsado4">—</b><small></small></div>
+              <div><span>Novo grupo repetitivo</span><b id="grupoAposSi4">—</b><small></small></div>
+              <div><span>Nitrogênio residual</span><b id="rnt4">—</b><small></small></div>
+              <div><span>Pressão residual</span><b id="pressaoFinal4">—</b><small></small></div>
+            </div>
+            <p class="note" id="obs4"></p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="card decision-panel" id="painelDecisao">
+            <div class="decision-header">
+              <span>Status operacional</span>
+              <b id="statusOperacionalFinal">—</b>
+            </div>
+            <div id="motivosOperacionais" class="decision-list"></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Relatório rápido</h2>
+          <div class="card">
+            <button id="copiar">Copiar planejamento</button>
+            <pre id="relatorio"></pre>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer-signature">
+      <div class="footer-warning">Ferramenta auxiliar de planejamento. Conferir POP, Manual de Mergulho DOMAR, Tabelas US Navy, computador de mergulho e decisão do MG responsável antes da operação.</div>
+      <div class="footer-sep"></div>
+      <div class="footer-app">Dive Planner<br>Versão 19</div>
+      <div class="footer-author">Desenvolvido por MG 19 Cristian | DOMAR/CBMPB</div>
+    </footer>
+  </div>
+  <script src="municipios_pb.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
