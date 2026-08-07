@@ -1,4 +1,10 @@
+// Nomes e cobertura: IBGE, lista atual de municípios da Paraíba. Altitudes: tabela institucional Embrapa/PB; valores sem publicação na fonte ficam null.
+// null indica altitude da sede não cadastrada, não altitude zero.
 const MUNICIPIOS_PB = [
+  {
+    "cidade": "Água Branca",
+    "altitude": 735.0
+  },
   {
     "cidade": "Aguiar",
     "altitude": 262.0
@@ -20,7 +26,7 @@ const MUNICIPIOS_PB = [
     "altitude": 500.0
   },
   {
-    "cidade": "Algodão De Jandaira",
+    "cidade": "Algodão de Jandaíra",
     "altitude": 470.0
   },
   {
@@ -37,7 +43,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Araçagi",
-    "altitude": 47.0
+    "altitude": 57.0
   },
   {
     "cidade": "Arara",
@@ -52,7 +58,7 @@ const MUNICIPIOS_PB = [
     "altitude": 618.0
   },
   {
-    "cidade": "Areia De Baraunas",
+    "cidade": "Areia de Baraúnas",
     "altitude": 371.0
   },
   {
@@ -68,6 +74,10 @@ const MUNICIPIOS_PB = [
     "altitude": 573.0
   },
   {
+    "cidade": "Baía da Traição",
+    "altitude": 2.0
+  },
+  {
     "cidade": "Bananeiras",
     "altitude": 520.0
   },
@@ -76,15 +86,15 @@ const MUNICIPIOS_PB = [
     "altitude": 626.0
   },
   {
-    "cidade": "Barra De Santa Rosa",
+    "cidade": "Barra de Santa Rosa",
     "altitude": 457.0
   },
   {
-    "cidade": "Barra De Santana",
+    "cidade": "Barra de Santana",
     "altitude": 350.0
   },
   {
-    "cidade": "Barra De São Miguel",
+    "cidade": "Barra de São Miguel",
     "altitude": 486.0
   },
   {
@@ -92,15 +102,11 @@ const MUNICIPIOS_PB = [
     "altitude": 11.0
   },
   {
-    "cidade": "Baía Da Traição",
-    "altitude": 2.0
-  },
-  {
     "cidade": "Belém",
     "altitude": 149.0
   },
   {
-    "cidade": "Belém Do Brejo Do Cruz",
+    "cidade": "Belém do Brejo do Cruz",
     "altitude": 176.0
   },
   {
@@ -124,7 +130,7 @@ const MUNICIPIOS_PB = [
     "altitude": 312.0
   },
   {
-    "cidade": "Bonito De Santa Fé",
+    "cidade": "Bonito de Santa Fé",
     "altitude": 593.0
   },
   {
@@ -136,11 +142,11 @@ const MUNICIPIOS_PB = [
     "altitude": 368.0
   },
   {
-    "cidade": "Brejo Do Cruz",
+    "cidade": "Brejo do Cruz",
     "altitude": 199.0
   },
   {
-    "cidade": "Brejo Dos Santos",
+    "cidade": "Brejo dos Santos",
     "altitude": 328.0
   },
   {
@@ -156,11 +162,15 @@ const MUNICIPIOS_PB = [
     "altitude": 3.0
   },
   {
-    "cidade": "Cacimba De Areia",
+    "cidade": "Cachoeira dos Índios",
+    "altitude": 319.0
+  },
+  {
+    "cidade": "Cacimba de Areia",
     "altitude": 272.0
   },
   {
-    "cidade": "Cacimba De Dentro",
+    "cidade": "Cacimba de Dentro",
     "altitude": 536.0
   },
   {
@@ -180,7 +190,7 @@ const MUNICIPIOS_PB = [
     "altitude": 261.0
   },
   {
-    "cidade": "Caldas De Brandão",
+    "cidade": "Caldas Brandão",
     "altitude": 75.0
   },
   {
@@ -196,12 +206,12 @@ const MUNICIPIOS_PB = [
     "altitude": 101.0
   },
   {
-    "cidade": "Carapateira",
-    "altitude": 372.0
-  },
-  {
     "cidade": "Caraúbas",
     "altitude": 451.0
+  },
+  {
+    "cidade": "Carrapateira",
+    "altitude": 372.0
   },
   {
     "cidade": "Casserengue",
@@ -212,7 +222,7 @@ const MUNICIPIOS_PB = [
     "altitude": 287.0
   },
   {
-    "cidade": "Catolé Do Rocha",
+    "cidade": "Catolé do Rocha",
     "altitude": 272.0
   },
   {
@@ -229,7 +239,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Conde",
-    "altitude": 12.0
+    "altitude": 112.0
   },
   {
     "cidade": "Congo",
@@ -244,7 +254,7 @@ const MUNICIPIOS_PB = [
     "altitude": 475.0
   },
   {
-    "cidade": "Cruz Do Espirito Santo",
+    "cidade": "Cruz do Espírito Santo",
     "altitude": 19.0
   },
   {
@@ -252,19 +262,19 @@ const MUNICIPIOS_PB = [
     "altitude": 555.0
   },
   {
-    "cidade": "Cuitegi",
-    "altitude": 90.0
-  },
-  {
     "cidade": "Cuité",
     "altitude": 649.0
   },
   {
-    "cidade": "Cuité De Mamaguape",
+    "cidade": "Cuité de Mamanguape",
     "altitude": 75.0
   },
   {
-    "cidade": "Curral De Cima",
+    "cidade": "Cuitegi",
+    "altitude": 90.0
+  },
+  {
+    "cidade": "Curral de Cima",
     "altitude": 75.0
   },
   {
@@ -276,12 +286,16 @@ const MUNICIPIOS_PB = [
     "altitude": 0.0
   },
   {
-    "cidade": "Destero",
+    "cidade": "Desterro",
     "altitude": 591.0
   },
   {
     "cidade": "Diamante",
-    "altitude": 318.0
+    "altitude": 315.0
+  },
+  {
+    "cidade": "Dona Inês",
+    "altitude": 421.0
   },
   {
     "cidade": "Duas Estradas",
@@ -317,11 +331,11 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Gurjão",
-    "altitude": 591.0
+    "altitude": 491.0
   },
   {
     "cidade": "Ibiara",
-    "altitude": 342.0
+    "altitude": 341.0
   },
   {
     "cidade": "Igaracy",
@@ -332,7 +346,7 @@ const MUNICIPIOS_PB = [
     "altitude": 763.0
   },
   {
-    "cidade": "Inga",
+    "cidade": "Ingá",
     "altitude": 0.0
   },
   {
@@ -360,11 +374,15 @@ const MUNICIPIOS_PB = [
     "altitude": 233.0
   },
   {
-    "cidade": "Joõa Pessoa",
+    "cidade": "João Pessoa",
     "altitude": 47.0
   },
   {
-    "cidade": "Juarez Tavora",
+    "cidade": "Joca Claudino",
+    "altitude": 345
+  },
+  {
+    "cidade": "Juarez Távora",
     "altitude": 145.0
   },
   {
@@ -372,7 +390,7 @@ const MUNICIPIOS_PB = [
     "altitude": 553.0
   },
   {
-    "cidade": "Junco Do Seridó",
+    "cidade": "Junco do Seridó",
     "altitude": 590.0
   },
   {
@@ -388,7 +406,7 @@ const MUNICIPIOS_PB = [
     "altitude": 273.0
   },
   {
-    "cidade": "Lagoa De Dentro",
+    "cidade": "Lagoa de Dentro",
     "altitude": 154.0
   },
   {
@@ -412,15 +430,19 @@ const MUNICIPIOS_PB = [
     "altitude": 3.0
   },
   {
+    "cidade": "Mãe d'Água",
+    "altitude": 414.0
+  },
+  {
     "cidade": "Malta",
     "altitude": 257.0
   },
   {
-    "cidade": "Mamaguape",
+    "cidade": "Mamanguape",
     "altitude": 35.0
   },
   {
-    "cidade": "Manaira",
+    "cidade": "Manaíra",
     "altitude": 757.0
   },
   {
@@ -432,12 +454,16 @@ const MUNICIPIOS_PB = [
     "altitude": 143.0
   },
   {
-    "cidade": "Marizopoles",
-    "altitude": 319.0
+    "cidade": "Marizópolis",
+    "altitude": 300.0
   },
   {
-    "cidade": "Massarandumba",
-    "altitude": 551.0
+    "cidade": "Massaranduba",
+    "altitude": 541.0
+  },
+  {
+    "cidade": "Mataraca",
+    "altitude": 14.0
   },
   {
     "cidade": "Matinhas",
@@ -465,7 +491,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Monteiro",
-    "altitude": 559.0
+    "altitude": 599.0
   },
   {
     "cidade": "Mulungu",
@@ -492,8 +518,8 @@ const MUNICIPIOS_PB = [
     "altitude": 560.0
   },
   {
-    "cidade": "Olho D’Agua",
-    "altitude": 439.0
+    "cidade": "Olho d'Água",
+    "altitude": 267.0
   },
   {
     "cidade": "Olivedos",
@@ -528,20 +554,32 @@ const MUNICIPIOS_PB = [
     "altitude": 516.0
   },
   {
-    "cidade": "Pedras De Fogo",
+    "cidade": "Pedras de Fogo",
     "altitude": 177.0
+  },
+  {
+    "cidade": "Pedro Régis",
+    "altitude": 80.0
   },
   {
     "cidade": "Piancó",
     "altitude": 269.0
   },
   {
-    "cidade": "Picui",
+    "cidade": "Picuí",
     "altitude": 439.0
   },
   {
     "cidade": "Pilar",
     "altitude": 35.0
+  },
+  {
+    "cidade": "Pilões",
+    "altitude": 334.0
+  },
+  {
+    "cidade": "Pilõezinhos",
+    "altitude": 133.0
   },
   {
     "cidade": "Pirpirituba",
@@ -552,20 +590,20 @@ const MUNICIPIOS_PB = [
     "altitude": 3.0
   },
   {
-    "cidade": "Pixinanã",
-    "altitude": 657.0
-  },
-  {
     "cidade": "Pocinhos",
     "altitude": 646.0
   },
   {
-    "cidade": "Pombal",
-    "altitude": 184.0
+    "cidade": "Poço Dantas",
+    "altitude": 470.0
   },
   {
-    "cidade": "Poço De José M",
+    "cidade": "Poço de José de Moura",
     "altitude": 280.0
+  },
+  {
+    "cidade": "Pombal",
+    "altitude": 184.0
   },
   {
     "cidade": "Prata",
@@ -576,6 +614,10 @@ const MUNICIPIOS_PB = [
     "altitude": 683.0
   },
   {
+    "cidade": "Puxinanã",
+    "altitude": 657.0
+  },
+  {
     "cidade": "Queimadas",
     "altitude": 450.0
   },
@@ -584,28 +626,28 @@ const MUNICIPIOS_PB = [
     "altitude": 293.0
   },
   {
-    "cidade": "Remigio",
+    "cidade": "Remígio",
     "altitude": 593.0
-  },
-  {
-    "cidade": "Riacho Dos Cav",
-    "altitude": 198.0
   },
   {
     "cidade": "Riachão",
     "altitude": 0.0
   },
   {
-    "cidade": "Riachão Do Poço",
-    "altitude": 82.0
-  },
-  {
-    "cidade": "Riachçao Do Bacamarte",
+    "cidade": "Riachão do Bacamarte",
     "altitude": 0.0
   },
   {
-    "cidade": "Richo De Santo Antonio",
+    "cidade": "Riachão do Poço",
+    "altitude": 82.0
+  },
+  {
+    "cidade": "Riacho de Santo Antônio",
     "altitude": 440.0
+  },
+  {
+    "cidade": "Riacho dos Cavalos",
+    "altitude": 198.0
   },
   {
     "cidade": "Rio Tinto",
@@ -616,8 +658,12 @@ const MUNICIPIOS_PB = [
     "altitude": 420.0
   },
   {
-    "cidade": "Salgado De São Felíx",
+    "cidade": "Salgado de São Félix",
     "altitude": 58.0
+  },
+  {
+    "cidade": "Santa Cecília",
+    "altitude": 0.0
   },
   {
     "cidade": "Santa Cruz",
@@ -640,39 +686,123 @@ const MUNICIPIOS_PB = [
     "altitude": 16.0
   },
   {
-    "cidade": "Santa Terezinha",
+    "cidade": "Santa Teresinha",
     "altitude": 306.0
   },
   {
-    "cidade": "Santana De Mangueira",
+    "cidade": "Santana de Mangueira",
     "altitude": 350.0
   },
   {
-    "cidade": "Santana Dos Garrotes",
+    "cidade": "Santana dos Garrotes",
     "altitude": 322.0
-  },
-  {
-    "cidade": "Santarém",
-    "altitude": 345.0
   },
   {
     "cidade": "Santo André",
     "altitude": 523.0
   },
   {
-    "cidade": "Sape",
-    "altitude": 123.0
+    "cidade": "São Bentinho",
+    "altitude": 251
   },
   {
-    "cidade": "Serido",
-    "altitude": 631.0
+    "cidade": "São Bento",
+    "altitude": 141.0
+  },
+  {
+    "cidade": "São Domingos",
+    "altitude": 190.0
+  },
+  {
+    "cidade": "São Domingos do Cariri",
+    "altitude": 400.0
+  },
+  {
+    "cidade": "São Francisco",
+    "altitude": 285.0
+  },
+  {
+    "cidade": "São João do Cariri",
+    "altitude": 458.0
+  },
+  {
+    "cidade": "São João do Rio do Peixe",
+    "altitude": 245.0
+  },
+  {
+    "cidade": "São João do Tigre",
+    "altitude": 577.0
+  },
+  {
+    "cidade": "São José da Lagoa Tapada",
+    "altitude": 257.0
+  },
+  {
+    "cidade": "São José de Caiana",
+    "altitude": 610.0
+  },
+  {
+    "cidade": "São José de Espinharas",
+    "altitude": 208.0
+  },
+  {
+    "cidade": "São José de Piranhas",
+    "altitude": 342.0
+  },
+  {
+    "cidade": "São José de Princesa",
+    "altitude": 720.0
+  },
+  {
+    "cidade": "São José do Bonfim",
+    "altitude": 278.0
+  },
+  {
+    "cidade": "São José do Brejo do Cruz",
+    "altitude": 147.0
+  },
+  {
+    "cidade": "São José do Sabugi",
+    "altitude": 333.0
+  },
+  {
+    "cidade": "São José dos Cordeiros",
+    "altitude": 527.0
+  },
+  {
+    "cidade": "São José dos Ramos",
+    "altitude": 140.0
+  },
+  {
+    "cidade": "São Mamede",
+    "altitude": 263.0
+  },
+  {
+    "cidade": "São Miguel de Taipu",
+    "altitude": 45.0
+  },
+  {
+    "cidade": "São Sebastião de Lagoa de Roça",
+    "altitude": 641.0
+  },
+  {
+    "cidade": "São Sebastião do Umbuzeiro",
+    "altitude": 594.0
+  },
+  {
+    "cidade": "São Vicente do Seridó",
+    "altitude": null
+  },
+  {
+    "cidade": "Sapé",
+    "altitude": 123.0
   },
   {
     "cidade": "Serra Branca",
     "altitude": 493.0
   },
   {
-    "cidade": "Serra Da Raiz",
+    "cidade": "Serra da Raiz",
     "altitude": 331.0
   },
   {
@@ -688,19 +818,23 @@ const MUNICIPIOS_PB = [
     "altitude": 533.0
   },
   {
-    "cidade": "Sobrado",
-    "altitude": 82.0
+    "cidade": "Sertãozinho",
+    "altitude": 135.0
   },
   {
-    "cidade": "Soledade",
-    "altitude": 521.0
+    "cidade": "Sobrado",
+    "altitude": 82.0
   },
   {
     "cidade": "Solânea",
     "altitude": 626.0
   },
   {
-    "cidade": "Sossego",
+    "cidade": "Soledade",
+    "altitude": 521.0
+  },
+  {
+    "cidade": "Sossêgo",
     "altitude": 580.0
   },
   {
@@ -712,92 +846,8 @@ const MUNICIPIOS_PB = [
     "altitude": 532.0
   },
   {
-    "cidade": "São Bento",
-    "altitude": 141.0
-  },
-  {
-    "cidade": "São Bento De Pombal",
-    "altitude": 251.0
-  },
-  {
-    "cidade": "São Domingos De Pombal",
-    "altitude": 190.0
-  },
-  {
-    "cidade": "São Domingos Do Cariri",
-    "altitude": 400.0
-  },
-  {
-    "cidade": "São Francisco",
-    "altitude": 285.0
-  },
-  {
-    "cidade": "São Jose De Caiana",
-    "altitude": 610.0
-  },
-  {
-    "cidade": "São Jose Dos Ramos",
-    "altitude": 140.0
-  },
-  {
-    "cidade": "São José Da Logoa Tapada",
-    "altitude": 247.0
-  },
-  {
-    "cidade": "São José De Espiaras",
-    "altitude": 208.0
-  },
-  {
-    "cidade": "São José De Piranhas",
-    "altitude": 342.0
-  },
-  {
-    "cidade": "São José De Princesa",
-    "altitude": 720.0
-  },
-  {
-    "cidade": "São José Do Bonfim",
-    "altitude": 278.0
-  },
-  {
-    "cidade": "São José Do Brejo Do Cruz",
-    "altitude": 147.0
-  },
-  {
-    "cidade": "São José Do Sabugi",
-    "altitude": 333.0
-  },
-  {
-    "cidade": "São José Dos Cordeiros",
-    "altitude": 527.0
-  },
-  {
-    "cidade": "São João Do Cariri",
-    "altitude": 458.0
-  },
-  {
-    "cidade": "São João Do Rio D Peixe",
-    "altitude": 245.0
-  },
-  {
-    "cidade": "São João Do Tigre",
-    "altitude": 577.0
-  },
-  {
-    "cidade": "São Mamede",
-    "altitude": 263.0
-  },
-  {
-    "cidade": "São Sebastião De Logoa De Roça",
-    "altitude": 641.0
-  },
-  {
-    "cidade": "São Sebastião Do Umbuzeiro",
-    "altitude": 594.0
-  },
-  {
     "cidade": "Tacima",
-    "altitude": 168.0
+    "altitude": 168
   },
   {
     "cidade": "Taperoá",
@@ -817,7 +867,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Triunfo",
-    "altitude": 330.0
+    "altitude": 310.0
   },
   {
     "cidade": "Uiraúna",
@@ -828,15 +878,21 @@ const MUNICIPIOS_PB = [
     "altitude": 541.0
   },
   {
-    "cidade": "Vista Serrana",
-    "altitude": 240.0
-  },
-  {
     "cidade": "Várzea",
     "altitude": 265.0
+  },
+  {
+    "cidade": "Vieirópolis",
+    "altitude": 414.0
+  },
+  {
+    "cidade": "Vista Serrana",
+    "altitude": 240.0
   },
   {
     "cidade": "Zabelê",
     "altitude": 632.0
   }
 ];
+
+

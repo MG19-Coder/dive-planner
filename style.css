@@ -403,3 +403,27 @@ pre{
   .kpis{grid-template-columns:1fr}
   .kpis b{font-size:28px}
 }
+
+.tool-launcher{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  background:linear-gradient(135deg,rgba(7,28,45,.94),rgba(4,16,28,.96));
+}
+.tool-launcher h2{margin:4px 0 5px}
+.tool-launcher p{margin:0;color:var(--muted);line-height:1.4}
+.eyebrow{
+  display:block;
+  color:var(--accent-2);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.ref-resultados{margin-top:18px}
+.ref-resultados .kpis{}
+@media (max-width:680px){
+  .tool-launcher{align-items:stretch;flex-direction:column}
+  .tool-launcher button{width:100%}
+}
