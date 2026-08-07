@@ -8,7 +8,7 @@ const GROUP_DESC = ['Z','O','N','M','L','K','J','I','H','G','F','E','D','C','B',
 // Cada valor é o tempo máximo que ainda enquadra o mergulho naquele grupo.
 const T13 = [
   {m:3, lnd:Infinity, t:[57,101,158,245,426]},
-  {m:4, lnd:Infinity, t:[36,60,88,121,163,217,297,449]},
+  {m:4, lnd:Infinity, t:[36,88,121,163,217,297,449]},
   {m:6, lnd:Infinity, t:[26,43,61,82,106,133,165,205,256,330,461]},
   {m:7, lnd:1102, t:[20,33,47,62,78,97,117,140,166,198,236,285,354,469,992,1102]},
   {m:9, lnd:371, t:[17,27,38,50,62,76,91,107,125,145,167,193,223,260,307,371]},
@@ -32,7 +32,7 @@ const T13 = [
 // Colunas na ordem: Z, O, N, M, L, K, J, I, H, G, F, E, D, C, B, A.
 const T14 = {
   3:[null,null,null,null,null,null,null,null,null,null,null,427,246,159,101,58],
-  4:[null,null,null,null,null,null,null,450,298,218,164,122,89,61,37,null],
+  4:[null,null,null,null,null,null,null,null,450,298,218,164,122,89,61,37],
   6:[null,null,null,null,null,462,331,257,206,166,134,106,83,62,44,27],
   7:[null,null,470,354,286,237,198,167,141,118,98,79,63,48,34,21],
   9:[372,308,261,224,194,168,146,126,108,92,77,63,51,39,28,18],
@@ -1849,6 +1849,8 @@ function setup(){
   setVisible('paginaResultado', false);
   atualizarPreview();
 }
+
+
 
 
 
