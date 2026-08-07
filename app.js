@@ -87,7 +87,30 @@ const RESERVA_BAILOUT_BAR = 0;
 
 function $(id){ return document.getElementById(id); }
 function num(id){ const el=$(id); return el ? (parseFloat(el.value)||0) : 0; }
-function setText(id, value, cls){ const el=$(id); if(!el) return; el.textContent=value; if(cls !== undefined) el.className=cls; }
+function totalMinutesFromFormattedTime(value){
+  const text = String(value ?? '').trim();
+  let match = text.match(/^(\d+)\s+min$/);
+  if(match) return Number(match[1]);
+  match = text.match(/^(\d+)\s+h(?:\s+(\d+)\s+min)?$/);
+  if(match) return Number(match[1]) * 60 + Number(match[2] || 0);
+  return null;
+}
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+}
+function setText(id, value, cls){
+  const el=$(id);
+  if(!el) return;
+  const totalMinutes = totalMinutesFromFormattedTime(value);
+  if(totalMinutes !== null){
+    const plain = String(value);
+    el.innerHTML = '<span class="tempo-principal">' + escapeHtml(plain) + '</span><small class="tempo-minutos">(' + totalMinutes + ' min)</small>';
+    if(!el.nodeType) el.textContent = plain + ' (' + totalMinutes + ' min)';
+  }else{
+    el.textContent=value;
+  }
+  if(cls !== undefined) el.className=cls;
+}
 function fmt(n,d=0){ return Number.isFinite(n) ? Number(n).toFixed(d) : '—'; }
 function formatTempo(min){
   if(!Number.isFinite(min)) return 'sem limite';
@@ -1849,6 +1872,8 @@ function setup(){
   setVisible('paginaResultado', false);
   atualizarPreview();
 }
+
+
 
 
 

@@ -427,3 +427,17 @@ pre{
   .tool-launcher{align-items:stretch;flex-direction:column}
   .tool-launcher button{width:100%}
 }
+
+.tempo-principal{display:inline}
+.tempo-minutos{
+  display:inline-block;
+  margin-left:6px;
+  color:#9fb6ca;
+  font-size:.48em;
+  font-weight:750;
+  line-height:1;
+  white-space:nowrap;
+  vertical-align:middle;
+}
+.kpi-dashboard .tempo-minutos{font-size:.52em}
+.kpis .tempo-minutos{font-size:.48em}
