@@ -133,6 +133,13 @@ function testRefutuacaoCalculation() {
   assert.strictEqual(elements.get('refPressaoTotal').textContent, '402');
   assert.strictEqual(elements.get('refAta').textContent, '2.00');
 }
+function testFormattedTimeShowsTotalMinutes() {
+  const { context, elements } = createContext();
+  context.setText('tempoTeste', context.formatTempo(80));
+  assert(elements.get('tempoTeste').innerHTML.includes('tempo-minutos'));
+  assert(elements.get('tempoTeste').innerHTML.includes('(80 min)'));
+  assert.strictEqual(elements.get('tempoTeste').textContent, '1 h 20 min (80 min)');
+}
 function testCoreCalculations() {
   const { context } = createContext();
   const linha = context.linhaTabela(context.profundidadeCorrigida(10, 0));
@@ -366,6 +373,7 @@ function testCompleteSurfaceIntervalCorrelation() {
 }
 testNextDiveStartsWithPreviousProfile();
 testCanonicalMunicipalityDataset();
+testFormattedTimeShowsTotalMinutes();
 testRefutuacaoCalculation();
 testCoreCalculations();
 testFirstPreviewErrorsAreIndependent();
@@ -389,6 +397,7 @@ testEmptyAlertCardsAreHidden();
 testAlertCardsShowWhenMessagesExist();
 
 console.log('OK: testes do Dive Planner V19 concluÃ­dos.');
+
 
 
 
