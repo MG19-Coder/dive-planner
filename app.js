@@ -8,7 +8,7 @@ const GROUP_DESC = ['Z','O','N','M','L','K','J','I','H','G','F','E','D','C','B',
 // Cada valor é o tempo máximo que ainda enquadra o mergulho naquele grupo.
 const T13 = [
   {m:3, lnd:Infinity, t:[57,101,158,245,426]},
-  {m:4, lnd:Infinity, t:[36,88,121,163,217,297,449]},
+  {m:4, lnd:Infinity, t:[36,60,88,121,163,217,297,449]},
   {m:6, lnd:Infinity, t:[26,43,61,82,106,133,165,205,256,330,461]},
   {m:7, lnd:1102, t:[20,33,47,62,78,97,117,140,166,198,236,285,354,469,992,1102]},
   {m:9, lnd:371, t:[17,27,38,50,62,76,91,107,125,145,167,193,223,260,307,371]},
@@ -1849,6 +1849,9 @@ function setup(){
   setVisible('paginaResultado', false);
   atualizarPreview();
 }
+
+
+
 
 
 
