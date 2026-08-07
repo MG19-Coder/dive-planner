@@ -261,18 +261,19 @@ function testReservePressureCreatesOperationalWarningOnly() {
   assert(!elements.get('previewAlertas').innerHTML.includes('Verifique press'), 'nao deve exibir mensagem generica de preenchimento');
 }
 
-function testNegativePressureCreatesRechargeWarningOnly() {
+function testNegativePressureBlocksCalculation() {
   const { context } = createContext({
     pressaoPrincipal: { value: '60' },
     tempo1: { value: '20' },
     prof1: { value: '10' }
   });
   const chain = context.computeChain();
-  assert(chain.ok, 'pressao final negativa deve permitir simulacao operacional');
-  assert.strictEqual(chain.dives[0].errors.length, 0);
-  assert(chain.dives[0].warnings.some(msg => /excede a capacidade do cilindro principal|troca ou recarga/i.test(msg)), 'deve recomendar troca ou recarga');
-  assert(chain.dives[0].warnings.some(msg => /-\d+ bar/.test(msg)), 'deve mostrar pressao final estimada negativa');
+  assert(!chain.ok, 'pressao final negativa deve bloquear o planejamento');
+  assert(chain.dives[0].errors.some(msg => /excede a capacidade|pressao final estimada/i.test(msg)));
+  assert.strictEqual(chain.dives[0].warnings.length, 0);
+  assert(chain.dives[0].errors.some(msg => /-\d+ bar/.test(msg)), 'deve mostrar pressao final estimada negativa');
 }
+
 
 function testManualIntervalValidationUsesNextDiveLimit() {
   const { context } = createContext({
@@ -416,7 +417,7 @@ testResidualPressureDoesNotDuplicateReserveValidation();
 testTtfAppearsInRepetitivePreview();
 testResidualPressureResultIncludesBar();
 testReservePressureCreatesOperationalWarningOnly();
-testNegativePressureCreatesRechargeWarningOnly();
+testNegativePressureBlocksCalculation();
 
 
 testManualIntervalValidationUsesNextDiveLimit();
@@ -430,6 +431,11 @@ testEmptyAlertCardsAreHidden();
 testAlertCardsShowWhenMessagesExist();
 
 console.log('OK: testes do Dive Planner V19 concluÃ­dos.');
+
+
+
+
+
 
 
 

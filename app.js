@@ -1491,6 +1491,10 @@ function computeChain(){
     const autonomiaBailoutCalculada = autonomiaBailout(tcs, entrada.profundidade, pressaoBailout);
     const pressaoFinalEstimativa = pressaoFinal(VOLUME_PRINCIPAL_S80, pressaoInicial, tcs, entrada.profundidade, entrada.tf);
     const avisos = avisosPressaoOperacional(pressaoFinalEstimativa);
+    if(pressaoFinalEstimativa < 0){
+      erros.push(...avisos);
+      avisos.length = 0;
+    }
 
     const mergulho = {
       numero: config.numero,
@@ -1937,6 +1941,7 @@ function setup(){
   setVisible('paginaResultado', false);
   atualizarPreview();
 }
+
 
 
 
