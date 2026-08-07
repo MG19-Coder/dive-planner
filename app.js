@@ -247,6 +247,7 @@ function semAcento(txt){ return String(txt||'').normalize('NFD').replace(/[\u030
 function preencherMunicipios(filtro=''){
   const sel=$('municipio');
   const datalist=$('municipiosSugeridos');
+  const lista=$('municipioSugestoes');
   if((!sel && !datalist) || typeof MUNICIPIOS_PB === 'undefined') return;
   const termo = semAcento(filtro || (($('buscaMunicipio')||{}).value || ''));
   const mapa = new Map();
@@ -274,6 +275,13 @@ function preencherMunicipios(filtro=''){
   }
   if(datalist){
     datalist.innerHTML = todos.map(m => '<option value="' + m.cidade + '"></option>').join('');
+  }
+  if(lista){
+    lista.innerHTML = todos.slice(0, 12).map(m => '<button type="button" class="municipio-opcao" role="option" data-municipio="' + escapeHtml(m.cidade) + '">' + escapeHtml(m.cidade) + '</button>').join('');
+    const aberta = String(filtro || '').trim().length > 0 && todos.length > 0;
+    lista.hidden = !aberta;
+    const busca = $('buscaMunicipio');
+    if(busca) busca.setAttribute('aria-expanded', String(aberta));
   }
 }
 function selecionarMunicipioPorNome(nome){
@@ -1791,7 +1799,26 @@ function setup(){
     el.addEventListener('change', atualizarPreview);
   });
   if($('municipio')) $('municipio').addEventListener('change', atualizarAltitudePorMunicipio);
-  if($('buscaMunicipio')) $('buscaMunicipio').addEventListener('input', e => { preencherMunicipios(e.target.value); if(!selecionarMunicipioPorNome(e.target.value)) atualizarPreview(); atualizarAltitudePorMunicipio(); });
+  if($('buscaMunicipio')){
+    $('buscaMunicipio').addEventListener('input', e => {
+      preencherMunicipios(e.target.value);
+      if(!selecionarMunicipioPorNome(e.target.value)) atualizarPreview();
+      atualizarAltitudePorMunicipio();
+    });
+    $('buscaMunicipio').addEventListener('focus', e => { if(e.target.value.trim()) preencherMunicipios(e.target.value); });
+  }
+  if($('municipioSugestoes')) $('municipioSugestoes').addEventListener('pointerdown', e => {
+    const opcao = e.target.closest('.municipio-opcao');
+    if(!opcao)return;
+    e.preventDefault();
+    const busca = $('buscaMunicipio');
+    const nome = opcao.dataset.municipio || '';
+    if(busca)busca.value=nome;
+    selecionarMunicipioPorNome(nome);
+    preencherMunicipios('');
+    atualizarAltitudePorMunicipio();
+    atualizarPreview();
+  });
   if($('btnCalcular')) $('btnCalcular').addEventListener('click', calcular);
   if($('btnVoltar')) $('btnVoltar').addEventListener('click', voltar);
   if($('copiar')) $('copiar').addEventListener('click', copiarRelatorio);
@@ -1886,6 +1913,18 @@ function setup(){
   });
   if($('municipio')) $('municipio').addEventListener('change', atualizarAltitudePorMunicipio);
   if($('buscaMunicipio')) $('buscaMunicipio').addEventListener('input', e => { preencherMunicipios(e.target.value); if(!selecionarMunicipioPorNome(e.target.value)) atualizarPreview(); atualizarAltitudePorMunicipio(); });
+  if($('municipioSugestoes')) $('municipioSugestoes').addEventListener('pointerdown', e => {
+    const opcao = e.target.closest('.municipio-opcao');
+    if(!opcao)return;
+    e.preventDefault();
+    const busca = $('buscaMunicipio');
+    const nome = opcao.dataset.municipio || '';
+    if(busca)busca.value=nome;
+    selecionarMunicipioPorNome(nome);
+    preencherMunicipios('');
+    atualizarAltitudePorMunicipio();
+    atualizarPreview();
+  });
   if($('btnCalcular')) $('btnCalcular').addEventListener('click', calcular);
   if($('btnVoltar')) $('btnVoltar').addEventListener('click', voltar);
   if($('copiar')) $('copiar').addEventListener('click', copiarRelatorio);

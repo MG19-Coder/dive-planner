@@ -13,11 +13,13 @@ function createElement(props = {}) {
     checked: false,
     textContent: '',
     innerHTML: '',
+    options: [],
     className: '',
     style: {},
     classList: { toggle(){}, remove(){}, add(){} },
     closest(){ return { style: {} }; },
     addEventListener(){},
+    setAttribute(){},
     ...props
   };
 }
@@ -101,6 +103,13 @@ function testNextDiveStartsWithPreviousProfile() {
   context.prepararMergulhoSeguinte(2);
   assert.strictEqual(elements.get('prof2').value, '40');
   assert.strictEqual(elements.get('tempo2').value, '10');
+}
+function testMunicipalitySuggestionsRender(){
+  const { context, elements } = createContext();
+  context.preencherMunicipios('Cabedelo');
+  const lista = elements.get('municipioSugestoes');
+  assert(lista.innerHTML.includes('Cabedelo'));
+  assert.strictEqual(lista.hidden, false);
 }
 function testCanonicalMunicipalityDataset() {
   const { context } = createContext();
@@ -392,6 +401,7 @@ function testCompleteSurfaceIntervalCorrelation() {
 }
 testNextDiveStartsWithPreviousProfile();
 testCanonicalMunicipalityDataset();
+testMunicipalitySuggestionsRender();
 testFormattedTimeShowsTotalMinutes();
 testRefutuacaoCalculation();
 testCoreCalculations();
@@ -417,6 +427,8 @@ testEmptyAlertCardsAreHidden();
 testAlertCardsShowWhenMessagesExist();
 
 console.log('OK: testes do Dive Planner V19 concluÃ­dos.');
+
+
 
 
 
