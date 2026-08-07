@@ -324,6 +324,38 @@ function testExactSurfaceIntervalForFortyMeterRepetitiveDive() {
   assert.strictEqual(chain.dives[0].is, 236, '40 m/10 min seguido de 40 m/6 min deve exigir 236 min de IS');
 }
 
+function testShallowAltitudeRepetitiveChain() {
+  const { context } = createContext({
+    altitude: { value: '533' },
+    prof1: { value: '3' },
+    tempo1: { value: '30' },
+    usarRep: { checked: true },
+    prof2: { value: '3' },
+    tempo2: { value: '30' },
+    cilindroNovo: { checked: true },
+    usarTerceiro: { checked: true },
+    prof3: { value: '3' },
+    tempo3: { value: '30' },
+    cilindroNovo3: { checked: true },
+    usarQuarto: { checked: true },
+    prof4: { value: '3' },
+    tempo4: { value: '30' },
+    cilindroNovo4: { checked: true }
+  });
+  const dives = context.computeChain().dives;
+  assert.strictEqual(dives[0].profundidadeTabela, 4);
+  assert.strictEqual(dives[0].gr, 'A');
+  assert.strictEqual(dives[0].is, 10);
+  assert.strictEqual(dives[0].ngr, 'A');
+  assert.strictEqual(dives[0].nr, 37);
+  assert.strictEqual(dives[1].ttf, 67);
+  assert.strictEqual(dives[1].gr, 'B');
+  assert.strictEqual(dives[1].nr, 61);
+  assert.strictEqual(dives[2].ttf, 91);
+  assert.strictEqual(dives[2].gr, 'C');
+  assert.strictEqual(dives[2].nr, 89);
+  assert(dives.every(d => d.errors.length === 0), 'perfil raso repetitivo deve ser viável');
+}
 function testCompleteSurfaceIntervalCorrelation() {
   const { context } = createContext();
   assert.strictEqual(context.grupoAposIntervalo('B', 77), 'A');
@@ -350,12 +382,14 @@ testNegativePressureCreatesRechargeWarningOnly();
 testManualIntervalValidationUsesNextDiveLimit();
 testExactSurfaceIntervalForFortyMeterRepetitiveDive();
 testCompleteSurfaceIntervalCorrelation();
+testShallowAltitudeRepetitiveChain();
 testFourDiveChain();
 testDecisionPanelRendersMotives();
 testEmptyAlertCardsAreHidden();
 testAlertCardsShowWhenMessagesExist();
 
 console.log('OK: testes do Dive Planner V19 concluÃ­dos.');
+
 
 
 
