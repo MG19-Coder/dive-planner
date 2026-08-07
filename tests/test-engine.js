@@ -363,6 +363,23 @@ function testShallowAltitudeRepetitiveChain() {
   assert.strictEqual(dives[2].nr, 122);
   assert(dives.every(d => d.errors.length === 0), 'perfil raso repetitivo deve ser viável');
 }
+function testQuickReportFormatAndOrder() {
+  const { context } = createContext({ buscaMunicipio: { value: 'Serraria' } });
+  const dive = (numero, tf, ttf, gr, is, ngr, nr) => ({
+    numero, profundidade: 3, profundidadeCorrigida: 4, tf, ttf, gr, is, ngr, nr,
+    erros: [], avisos: []
+  });
+  const report = context.montarRelatorio({
+    mergulhos: [dive(1, 30, 30, 'A', 10, 'A', 37), dive(2, 30, 67, 'C', 10, 'C', 89)]
+  });
+  assert(report.indexOf('DOMAR/CBMPB') < report.indexOf('MERGULHO NO MUNICÍPIO SERRARIA'));
+  assert(report.includes('Profundidade real: 3.0 m'));
+  assert(report.includes('Profundidade corrigida: 4 m'));
+  assert(report.includes('Tempo total de fundo: 1 h 7 min (67 min)'));
+  assert(report.includes('NR: 37 min (37 min)'));
+  assert(!report.includes('V19'));
+  assert(!report.toLowerCase().includes('pressão residual'));
+}
 function testCompleteSurfaceIntervalCorrelation() {
   const { context } = createContext();
   assert.strictEqual(context.grupoAposIntervalo('B', 77), 'A');
@@ -390,6 +407,7 @@ testNegativePressureCreatesRechargeWarningOnly();
 testManualIntervalValidationUsesNextDiveLimit();
 testExactSurfaceIntervalForFortyMeterRepetitiveDive();
 testCompleteSurfaceIntervalCorrelation();
+testQuickReportFormatAndOrder();
 testShallowAltitudeRepetitiveChain();
 testFourDiveChain();
 testDecisionPanelRendersMotives();
@@ -397,6 +415,11 @@ testEmptyAlertCardsAreHidden();
 testAlertCardsShowWhenMessagesExist();
 
 console.log('OK: testes do Dive Planner V19 concluÃ­dos.');
+
+
+
+
+
 
 
 
