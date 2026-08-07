@@ -455,3 +455,6 @@ pre{
   .header-actions{gap:8px}
   .header-tool{padding:9px 10px;font-size:12px}
 }
+
+.brand h1 .version-badge{display:inline-block;margin-left:8px;padding:3px 7px;font-size:11px;line-height:1;vertical-align:middle}
+@media(max-width:760px){.brand h1 .version-badge{display:inline-block}}
