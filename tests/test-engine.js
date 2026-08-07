@@ -138,7 +138,9 @@ function testFormattedTimeShowsTotalMinutes() {
   context.setText('tempoTeste', context.formatTempo(80));
   assert(elements.get('tempoTeste').innerHTML.includes('tempo-minutos'));
   assert(elements.get('tempoTeste').innerHTML.includes('(80 min)'));
-  assert.strictEqual(elements.get('tempoTeste').textContent, '1 h 20 min (80 min)');
+  assert.strictEqual(elements.get('tempoTeste').textContent, '1 h 20 min (80 min)');  context.setText('tempoSessenta', context.formatTempo(60));
+  assert(!elements.get('tempoSessenta').innerHTML.includes('tempo-minutos'));
+  assert.strictEqual(elements.get('tempoSessenta').textContent, '1 h');
 }
 function testCoreCalculations() {
   const { context } = createContext();
@@ -415,6 +417,7 @@ testEmptyAlertCardsAreHidden();
 testAlertCardsShowWhenMessagesExist();
 
 console.log('OK: testes do Dive Planner V19 concluÃ­dos.');
+
 
 
 

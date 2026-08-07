@@ -102,7 +102,7 @@ function setText(id, value, cls){
   const el=$(id);
   if(!el) return;
   const totalMinutes = totalMinutesFromFormattedTime(value);
-  if(totalMinutes !== null){
+  if(totalMinutes !== null && totalMinutes > 60){
     const plain = String(value);
     el.innerHTML = '<span class="tempo-principal">' + escapeHtml(plain) + '</span><small class="tempo-minutos">(' + totalMinutes + ' min)</small>';
     if(!el.nodeType) el.textContent = plain + ' (' + totalMinutes + ' min)';
@@ -1896,6 +1896,7 @@ function setup(){
   setVisible('paginaResultado', false);
   atualizarPreview();
 }
+
 
 
 
