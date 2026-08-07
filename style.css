@@ -448,3 +448,10 @@ pre{
 .municipio-opcao:hover,.municipio-opcao:focus{background:rgba(50,183,255,.18);outline:none}
 .card{overflow:visible}
 
+
+.header-actions{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.header-tool{white-space:nowrap;padding:10px 14px}
+@media(max-width:760px){
+  .header-actions{gap:8px}
+  .header-tool{padding:9px 10px;font-size:12px}
+}
