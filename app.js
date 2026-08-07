@@ -1302,26 +1302,36 @@ function renderResults(chain){
   });
 }
 
+function formatTempoRelatorio(min){
+  if(!Number.isFinite(min)) return formatTempo(min);
+  return formatTempo(min) + ' (' + Math.max(0, Math.floor(Number(min))) + ' min)';
+}
+function nomeMunicipioRelatorio(){
+  const busca = $('buscaMunicipio');
+  const textoBusca = busca && String(busca.value || '').trim();
+  if(textoBusca) return textoBusca;
+  const sel = $('municipio');
+  const option = sel && sel.options ? [...sel.options].find(opt => opt.selected && opt.dataset && opt.dataset.cidade) : null;
+  return option ? option.dataset.cidade : 'não informado';
+}
 function montarRelatorio(chain){
-  const linhas = ['DIVE PLANNER DOMAR/CBMPB - PLANEJAMENTO OPERACIONAL'];
-  chain.dives.forEach(d => {
+  const municipio = nomeMunicipioRelatorio();
+  const linhas = ['DOMAR/CBMPB', 'MERGULHO NO MUNICÍPIO ' + municipio.toUpperCase()];
+  chain.mergulhos.forEach(m => {
     linhas.push('');
-    linhas.push(`${d.n}º MERGULHO`);
-    linhas.push(`Profundidade corrigida: ${fmt(ceil0(d.profCorr), 0)} m`);
-    if(d.n === 1){
-      linhas.push(`Tempo de fundo: ${formatTempo(d.tempo)}`);
-    }else{
-      linhas.push(`Tempo total de fundo: ${formatTempo(d.ttf)}`);
-    }
-    linhas.push(`Grupo repetitivo: ${d.gr}`);
-    linhas.push(`Intervalo de superficie: ${resultIntervalText(d)}`);
-    linhas.push(`Novo grupo repetitivo: ${resultNgrText(d)}`);
-    linhas.push(`Nitrogenio residual: ${resultNrText(d)}`);
-    linhas.push(`Pressao residual do cilindro: ${fmt(d.pressureFinal, 0)} bar`);
-    if(d.errors.length || d.warnings.length) linhas.push(`Alertas: ${[...d.errors, ...d.warnings].join(' | ')}`);
+    linhas.push(m.numero + 'º MERGULHO');
+    linhas.push('Profundidade real: ' + fmt(m.profundidade, 1) + ' m');
+    linhas.push('Profundidade corrigida: ' + fmt(ceil0(m.profundidadeCorrigida), 0) + ' m');
+    linhas.push('Tempo de fundo: ' + formatTempoRelatorio(m.tf));
+    if(m.numero > 1) linhas.push('Tempo total de fundo: ' + formatTempoRelatorio(m.ttf));
+    linhas.push('GR: ' + m.gr);
+    linhas.push('IS: ' + (m.is === null ? '—' : formatTempoRelatorio(m.is)));
+    linhas.push('NGR: ' + (m.ngr || '—'));
+    linhas.push('NR: ' + (m.nr === null ? '—' : formatTempoRelatorio(m.nr)));
+    if(m.erros.length || m.avisos.length) linhas.push('Motivos: ' + [...m.erros, ...m.avisos].join(' | '));
   });
   linhas.push('');
-  linhas.push('Conferir POP, tabelas US Navy, computador de mergulho e decisao do MG responsavel.');
+  linhas.push('STATUS OPERACIONAL: ' + (statusResumo(chain) === 'ok' ? 'PLANEJAMENTO OK' : (statusResumo(chain) === 'attention' ? 'ATENÇÃO OPERACIONAL' : 'REVISAR PLANEJAMENTO')));
   return linhas.join('\n');
 }
 
@@ -1694,22 +1704,36 @@ function renderResults(chain){
   renderPainelDecisao(chain);
 }
 
+function formatTempoRelatorio(min){
+  if(!Number.isFinite(min)) return formatTempo(min);
+  return formatTempo(min) + ' (' + Math.max(0, Math.floor(Number(min))) + ' min)';
+}
+function nomeMunicipioRelatorio(){
+  const busca = $('buscaMunicipio');
+  const textoBusca = busca && String(busca.value || '').trim();
+  if(textoBusca) return textoBusca;
+  const sel = $('municipio');
+  const option = sel && sel.options ? [...sel.options].find(opt => opt.selected && opt.dataset && opt.dataset.cidade) : null;
+  return option ? option.dataset.cidade : 'não informado';
+}
 function montarRelatorio(chain){
-  const linhas = ['DIVE PLANNER DOMAR/CBMPB - V19'];
+  const municipio = nomeMunicipioRelatorio();
+  const linhas = ['DOMAR/CBMPB', 'MERGULHO NO MUNICÍPIO ' + municipio.toUpperCase()];
   chain.mergulhos.forEach(m => {
     linhas.push('');
-    linhas.push(`${m.numero}º MERGULHO`);
-    linhas.push(`Profundidade corrigida: ${fmt(ceil0(m.profundidadeCorrigida), 0)} m`);
-    linhas.push(m.numero === 1 ? `Tempo de fundo: ${formatTempo(m.tf)}` : `TTF: ${formatTempo(m.ttf)}`);
-    linhas.push(`GR: ${m.gr}`);
-    linhas.push(`IS: ${resultIntervalText(m)}`);
-    linhas.push(`NGR: ${resultNgrText(m)}`);
-    linhas.push(`NR: ${resultNrText(m)}`);
-    linhas.push(`Pressao residual: ${resultPressureText(m)}`);
-    if(m.erros.length || m.avisos.length) linhas.push(`Motivos: ${[...m.erros, ...m.avisos].join(' | ')}`);
+    linhas.push(m.numero + 'º MERGULHO');
+    linhas.push('Profundidade real: ' + fmt(m.profundidade, 1) + ' m');
+    linhas.push('Profundidade corrigida: ' + fmt(ceil0(m.profundidadeCorrigida), 0) + ' m');
+    linhas.push('Tempo de fundo: ' + formatTempoRelatorio(m.tf));
+    if(m.numero > 1) linhas.push('Tempo total de fundo: ' + formatTempoRelatorio(m.ttf));
+    linhas.push('GR: ' + m.gr);
+    linhas.push('IS: ' + (m.is === null ? '—' : formatTempoRelatorio(m.is)));
+    linhas.push('NGR: ' + (m.ngr || '—'));
+    linhas.push('NR: ' + (m.nr === null ? '—' : formatTempoRelatorio(m.nr)));
+    if(m.erros.length || m.avisos.length) linhas.push('Motivos: ' + [...m.erros, ...m.avisos].join(' | '));
   });
   linhas.push('');
-  linhas.push(`STATUS OPERACIONAL: ${statusResumo(chain) === 'ok' ? 'PLANEJAMENTO OK' : (statusResumo(chain) === 'attention' ? 'ATENCAO OPERACIONAL' : 'REVISAR PLANEJAMENTO')}`);
+  linhas.push('STATUS OPERACIONAL: ' + (statusResumo(chain) === 'ok' ? 'PLANEJAMENTO OK' : (statusResumo(chain) === 'attention' ? 'ATENÇÃO OPERACIONAL' : 'REVISAR PLANEJAMENTO')));
   return linhas.join('\n');
 }
 
@@ -1872,6 +1896,7 @@ function setup(){
   setVisible('paginaResultado', false);
   atualizarPreview();
 }
+
 
 
 
