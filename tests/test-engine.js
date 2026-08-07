@@ -354,6 +354,11 @@ function testShallowAltitudeRepetitiveChain() {
   assert.strictEqual(dives[2].ttf, 119);
   assert.strictEqual(dives[2].gr, 'D');
   assert.strictEqual(dives[2].nr, 122);
+  assert.strictEqual(dives[1].gr, 'B');
+  assert.strictEqual(dives[1].nr, 61);
+  assert.strictEqual(dives[2].ttf, 91);
+  assert.strictEqual(dives[2].gr, 'C');
+  assert.strictEqual(dives[2].nr, 89);
   assert(dives.every(d => d.errors.length === 0), 'perfil raso repetitivo deve ser viável');
 }
 function testCompleteSurfaceIntervalCorrelation() {
@@ -389,6 +394,7 @@ testEmptyAlertCardsAreHidden();
 testAlertCardsShowWhenMessagesExist();
 
 console.log('OK: testes do Dive Planner V19 concluÃ­dos.');
+
 
 
 
