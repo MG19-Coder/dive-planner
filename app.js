@@ -59,6 +59,27 @@ const SI_BANDS = [
   [419,471], [472,523], [524,575], [576,627], [628,679], [680,733], [734,810], [811,950]
 ];
 
+// Limites exatos da tabela de intervalo de superfície para o grupo E.
+// O fallback acima permanece para grupos ainda não cadastrados nesta versão.
+const SI_THRESHOLDS_BY_GROUP = {
+  A: [10, 140],
+  B: [10, 77, 216],
+  C: [10, 56, 132, 271],
+  D: [10, 53, 108, 184, 323],
+  E: [10, 53, 105, 160, 236, 375],
+  F: [10, 53, 105, 158, 212, 289, 428],
+  G: [10, 53, 105, 158, 210, 264, 341, 480],
+  H: [10, 53, 105, 158, 210, 262, 317, 393, 532],
+  I: [10, 53, 105, 158, 210, 262, 314, 369, 445, 584],
+  J: [10, 53, 105, 158, 210, 262, 314, 367, 421, 497, 636],
+  K: [10, 53, 105, 158, 210, 262, 314, 367, 419, 472, 551, 689],
+  L: [10, 53, 105, 158, 210, 262, 314, 367, 419, 471, 525, 601, 741],
+  M: [10, 53, 105, 158, 210, 262, 314, 366, 418, 470, 522, 583, 653, 793],
+  N: [10, 53, 105, 158, 210, 262, 314, 366, 418, 470, 522, 574, 630, 705, 845],
+  O: [10, 53, 105, 158, 210, 262, 314, 366, 418, 470, 522, 574, 627, 681, 757, 898],
+  Z: [10, 53, 105, 158, 210, 262, 314, 366, 418, 470, 522, 574, 627, 679, 733, 810, 950]
+};
+
 const VOLUME_PRINCIPAL_S80 = 11.2;
 const RESERVA_PRINCIPAL_BAR = 50;
 const VOLUME_BAILOUT_S30 = 4.3;
@@ -105,6 +126,15 @@ function grupoAposIntervalo(grupoInicial, siMin){
   const idxInicial = GROUP_ORDER.indexOf(grupoInicial);
   if(idxInicial < 0) return null;
   if(siMin < 10) return grupoInicial;
+  const thresholds = SI_THRESHOLDS_BY_GROUP[grupoInicial];
+  if(thresholds){
+    let bandIdx = 0;
+    for(let i=0; i<thresholds.length; i++){
+      if(siMin >= thresholds[i]) bandIdx = i;
+      else break;
+    }
+    return GROUP_ORDER[Math.max(0, idxInicial - bandIdx)];
+  }
   for(let bandIdx=0; bandIdx<SI_BANDS.length; bandIdx++){
     const [ini,fim] = SI_BANDS[bandIdx];
     if(siMin >= ini && siMin <= fim){
@@ -181,32 +211,25 @@ const CORRECOES_MUNICIPIOS = {
   'Sape':'Sapé'
 };
 
-const ALTITUDES_COMPLEMENTARES = {
-  'João Pessoa':47, 'Cabedelo':3, 'Lucena':6, 'Conde':112, 'Pitimbu':4, 'Baía da Traição':2,
-  'Rio Tinto':11, 'Marcação':5, 'Mataraca':40, 'Gurinhém':83, 'São Miguel de Taipu':89,
-  'Coremas':218, 'Boqueirão':355, 'Itatuba':135, 'Sousa':220, 'Cajazeiras':298, 'Patos':242,
-  'Teixeira':768, 'Alhandra':49, 'Caaporã':29, 'Bom Jesus':318, 'Pombal':184, 'São Bento':141,
-  'Monteiro':599, 'Sumé':532, 'Taperoá':532, 'Prata':595, 'Camalaú':521, 'Congo':475,
-  'Santa Luzia':299, 'Mãe d\'Água':743, 'Nazarezinho':260, 'Marizópolis':253,
-  'Cajazeirinhas':261, 'Condado':250
-};
+const ALTITUDES_COMPLEMENTARES = {};
 
 function nomeCorrigido(nome){ return CORRECOES_MUNICIPIOS[nome] || nome; }
 function municipioNormalizado(m){
   const cidade = nomeCorrigido(m.cidade || '');
-  const altitude = Number.isFinite(Number(ALTITUDES_COMPLEMENTARES[cidade])) ? Number(ALTITUDES_COMPLEMENTARES[cidade]) : Number(m.altitude);
+  const altitude = Object.prototype.hasOwnProperty.call(m, 'altitude') && m.altitude !== null && m.altitude !== '' ? Number(m.altitude) : null;
   return {cidade, altitude};
 }
 function semAcento(txt){ return String(txt||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); }
 
 function preencherMunicipios(filtro=''){
   const sel=$('municipio');
-  if(!sel || typeof MUNICIPIOS_PB === 'undefined') return;
+  const datalist=$('municipiosSugeridos');
+  if((!sel && !datalist) || typeof MUNICIPIOS_PB === 'undefined') return;
   const termo = semAcento(filtro || (($('buscaMunicipio')||{}).value || ''));
   const mapa = new Map();
   MUNICIPIOS_PB.map(municipioNormalizado).forEach(m=>{
-    if(m.cidade && Number.isFinite(Number(m.altitude)) && Number(m.altitude) > 0){
-      mapa.set(m.cidade, {cidade:m.cidade, altitude:Number(m.altitude)});
+    if(m.cidade && (m.altitude === null || Number.isFinite(Number(m.altitude)))){
+      mapa.set(m.cidade, {cidade:m.cidade, altitude:m.altitude === null ? null : Number(m.altitude)});
     }
   });
   Object.entries(ALTITUDES_COMPLEMENTARES).forEach(([cidade, altitude])=>{
@@ -218,16 +241,30 @@ function preencherMunicipios(filtro=''){
   const prioritarios = MUNICIPIOS_PRIORITARIOS_DOMAR.map(nome => mapa.get(nome)).filter(Boolean)
     .filter(m => !termo || semAcento(m.cidade).includes(termo));
   const demais = todos.filter(m => !nomesPrioritarios.has(m.cidade));
-  const opt = m => `<option value="${Number(m.altitude)}" data-cidade="${m.cidade}">${m.cidade} (${Number(m.altitude)} m)</option>`;
-  sel.innerHTML = '<option value="">Selecionar município...</option>' +
-    (prioritarios.length ? `<optgroup label="⭐ Municípios prioritários DOMAR">${prioritarios.map(opt).join('')}</optgroup>` : '') +
-    `<optgroup label="Todos os Municípios da Paraíba">${demais.map(opt).join('')}</optgroup>`;
-  const jp = [...sel.options].find(o=>o.dataset && o.dataset.cidade==='João Pessoa');
-  if(jp && !sel.value){ jp.selected=true; $('altitude').value=jp.value; }
+  const opt = m => '<option value="' + (m.altitude === null ? '' : Number(m.altitude)) + '" data-cidade="' + m.cidade + '">' + m.cidade + (m.altitude === null ? ' (altitude não cadastrada)' : ' (' + Number(m.altitude) + ' m)') + '</option>';
+  if(sel){
+    sel.innerHTML = '<option value="">Selecionar município...</option>' +
+      (prioritarios.length ? '<optgroup label="⭐ Municípios prioritários DOMAR">' + prioritarios.map(opt).join('') + '</optgroup>' : '') +
+      '<optgroup label="Todos os Municípios da Paraíba">' + demais.map(opt).join('') + '</optgroup>';
+    const jp = [...sel.options].find(o=>o.dataset && o.dataset.cidade==='João Pessoa');
+    if(!termo && jp && !sel.value){ jp.selected=true; $('altitude').value=jp.value; }
+  }
+  if(datalist){
+    datalist.innerHTML = todos.map(m => '<option value="' + m.cidade + '"></option>').join('');
+  }
+}
+function selecionarMunicipioPorNome(nome){
+  const sel=$('municipio');
+  if(!sel) return false;
+  const termo=semAcento(nome).trim();
+  if(!termo) return false;
+  const option=[...sel.options].find(o=>o.dataset && semAcento(o.dataset.cidade)===termo);
+  if(!option) return false;
+  sel.value=option.value;
+  $('altitude').value=option.value;
+  return true;
 }
 function atualizarAltitudePorMunicipio(){ const sel=$('municipio'); if(sel && sel.value !== '') $('altitude').value = sel.value; atualizarPreview(); }
-
-
 function errosPlanejamentoPreview(){
   const erros=[];
   const tcs=num('tcs'), prof1=num('prof1'), alt=num('altitude'), tempo1=num('tempo1'), pressP=num('pressaoPrincipal'), pressB=num('pressaoBailout');
@@ -854,6 +891,26 @@ function atualizarSiManual4(){
   const lab=el.closest('label'); if(lab) lab.style.display=manual?'block':'none';
 }
 
+function copiarDadosMergulho(profOrigem, tempoOrigem, profDestino, tempoDestino){
+  const prof = $('prof' + profOrigem);
+  const tempo = $('tempo' + tempoOrigem);
+  const profAlvo = $('prof' + profDestino);
+  const tempoAlvo = $('tempo' + tempoDestino);
+  if(prof && profAlvo) profAlvo.value = prof.value;
+  if(tempo && tempoAlvo) tempoAlvo.value = tempo.value;
+}
+
+function prepararMergulhoSeguinte(numero){
+  if(numero === 2 && $('usarRep') && $('usarRep').checked){
+    copiarDadosMergulho(1, 1, 2, 2);
+  }
+  if(numero === 3 && $('usarTerceiro') && $('usarTerceiro').checked){
+    copiarDadosMergulho(2, 2, 3, 3);
+  }
+  if(numero === 4 && $('usarQuarto') && $('usarQuarto').checked){
+    copiarDadosMergulho(3, 3, 4, 4);
+  }
+}
 function setup(){
   preencherMunicipios();
   if($('municipio')) $('municipio').addEventListener('change', atualizarAltitudePorMunicipio);
@@ -1649,6 +1706,26 @@ function calcular(){
   window.scrollTo && window.scrollTo({ top:0, behavior:'smooth' });
 }
 
+function copiarDadosMergulho(profOrigem, tempoOrigem, profDestino, tempoDestino){
+  const prof = $('prof' + profOrigem);
+  const tempo = $('tempo' + tempoOrigem);
+  const profAlvo = $('prof' + profDestino);
+  const tempoAlvo = $('tempo' + tempoDestino);
+  if(prof && profAlvo) profAlvo.value = prof.value;
+  if(tempo && tempoAlvo) tempoAlvo.value = tempo.value;
+}
+
+function prepararMergulhoSeguinte(numero){
+  if(numero === 2 && $('usarRep') && $('usarRep').checked){
+    copiarDadosMergulho(1, 1, 2, 2);
+  }
+  if(numero === 3 && $('usarTerceiro') && $('usarTerceiro').checked){
+    copiarDadosMergulho(2, 2, 3, 3);
+  }
+  if(numero === 4 && $('usarQuarto') && $('usarQuarto').checked){
+    copiarDadosMergulho(3, 3, 4, 4);
+  }
+}
 function setup(){
   preencherMunicipios();
   atualizarSiManual();
@@ -1667,7 +1744,7 @@ function setup(){
     el.addEventListener('change', atualizarPreview);
   });
   if($('municipio')) $('municipio').addEventListener('change', atualizarAltitudePorMunicipio);
-  if($('buscaMunicipio')) $('buscaMunicipio').addEventListener('input', e => { preencherMunicipios(e.target.value); atualizarAltitudePorMunicipio(); });
+  if($('buscaMunicipio')) $('buscaMunicipio').addEventListener('input', e => { preencherMunicipios(e.target.value); if(!selecionarMunicipioPorNome(e.target.value)) atualizarPreview(); atualizarAltitudePorMunicipio(); });
   if($('btnCalcular')) $('btnCalcular').addEventListener('click', calcular);
   if($('btnVoltar')) $('btnVoltar').addEventListener('click', voltar);
   if($('copiar')) $('copiar').addEventListener('click', copiarRelatorio);
@@ -1680,7 +1757,69 @@ function copiarRelatorio(){
   if(navigator.clipboard && texto) navigator.clipboard.writeText(texto);
 }
 
+function copiarDadosMergulho(profOrigem, tempoOrigem, profDestino, tempoDestino){
+  const prof = $('prof' + profOrigem);
+  const tempo = $('tempo' + tempoOrigem);
+  const profAlvo = $('prof' + profDestino);
+  const tempoAlvo = $('tempo' + tempoDestino);
+  if(prof && profAlvo) profAlvo.value = prof.value;
+  if(tempo && tempoAlvo) tempoAlvo.value = tempo.value;
+}
+
+function prepararMergulhoSeguinte(numero){
+  if(numero === 2 && $('usarRep') && $('usarRep').checked){
+    copiarDadosMergulho(1, 1, 2, 2);
+  }
+  if(numero === 3 && $('usarTerceiro') && $('usarTerceiro').checked){
+    copiarDadosMergulho(2, 2, 3, 3);
+  }
+  if(numero === 4 && $('usarQuarto') && $('usarQuarto').checked){
+    copiarDadosMergulho(3, 3, 4, 4);
+  }
+}
+function calcularRefutuacao(){
+  const peso = num('refPeso');
+  const profundidade = num('refProfundidade');
+  const pressao = num('refPressao');
+  const volume = num('refVolume');
+  if(peso < 0 || profundidade < 0 || pressao <= 0 || volume <= 0){
+    ['refLitrosNecessarios','refLitrosCilindro','refQuantidadeCilindros','refPressaoTotal','refAta'].forEach(id=>setText(id,'—'));
+    return;
+  }
+  const ataAbsoluta = 1 + (profundidade / 10);
+  const litrosNecessarios = peso * 0.75 * ataAbsoluta;
+  const litrosPorCilindro = volume * pressao;
+  const quantidadeCilindros = litrosNecessarios > 0 ? Math.ceil(litrosNecessarios / litrosPorCilindro) : 0;
+  const pressaoTotal = litrosNecessarios / volume;
+  setText('refLitrosNecessarios', fmt(litrosNecessarios, 0));
+  setText('refLitrosCilindro', fmt(litrosPorCilindro, 0));
+  setText('refQuantidadeCilindros', fmt(quantidadeCilindros, 0));
+  setText('refPressaoTotal', fmt(pressaoTotal, 0));
+  setText('refAta', fmt(ataAbsoluta, 2));
+}
+
+function abrirRefutuacao(){
+  const entrada = $('paginaEntrada');
+  const resultado = $('paginaResultado');
+  const pagina = $('paginaRefutuacao');
+  if(entrada){ entrada.classList.remove('active'); entrada.style.display='none'; }
+  if(resultado){ resultado.classList.remove('active'); resultado.style.display='none'; }
+  if(pagina){ pagina.classList.add('active'); pagina.style.display='block'; }
+  calcularRefutuacao();
+  window.scrollTo && window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function voltarRefutuacao(){
+  const pagina = $('paginaRefutuacao');
+  const entrada = $('paginaEntrada');
+  if(pagina){ pagina.classList.remove('active'); pagina.style.display='none'; }
+  if(entrada){ entrada.classList.add('active'); entrada.style.display='block'; }
+  window.scrollTo && window.scrollTo({top:0, behavior:'smooth'});
+}
 function setup(){
+  if($('btnAbrirRefutuacao')) $('btnAbrirRefutuacao').addEventListener('click', abrirRefutuacao);
+  if($('btnVoltarRefutuacao')) $('btnVoltarRefutuacao').addEventListener('click', voltarRefutuacao);
+  ['refPeso','refProfundidade','refPressao','refVolume'].forEach(id=>{ if($(id)) $(id).addEventListener('input', calcularRefutuacao); });
   preencherMunicipios();
   atualizarSiManual();
   atualizarSiManual3();
@@ -1699,11 +1838,18 @@ function setup(){
     el.addEventListener('change', atualizarPreview);
   });
   if($('municipio')) $('municipio').addEventListener('change', atualizarAltitudePorMunicipio);
-  if($('buscaMunicipio')) $('buscaMunicipio').addEventListener('input', e => { preencherMunicipios(e.target.value); atualizarAltitudePorMunicipio(); });
+  if($('buscaMunicipio')) $('buscaMunicipio').addEventListener('input', e => { preencherMunicipios(e.target.value); if(!selecionarMunicipioPorNome(e.target.value)) atualizarPreview(); atualizarAltitudePorMunicipio(); });
   if($('btnCalcular')) $('btnCalcular').addEventListener('click', calcular);
   if($('btnVoltar')) $('btnVoltar').addEventListener('click', voltar);
   if($('copiar')) $('copiar').addEventListener('click', copiarRelatorio);
+  if($('usarRep')) $('usarRep').addEventListener('change', () => { prepararMergulhoSeguinte(2); atualizarPreview(); });
+  if($('usarTerceiro')) $('usarTerceiro').addEventListener('change', () => { prepararMergulhoSeguinte(3); atualizarPreview(); });
+  if($('usarQuarto')) $('usarQuarto').addEventListener('change', () => { prepararMergulhoSeguinte(4); atualizarPreview(); });
 
   setVisible('paginaResultado', false);
   atualizarPreview();
 }
+
+
+
+

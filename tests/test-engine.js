@@ -1,4 +1,4 @@
-﻿const fs = require('fs');
+const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
 const assert = require('assert');
@@ -90,6 +90,49 @@ function createContext(overrides = {}) {
   return { context, elements };
 }
 
+function testNextDiveStartsWithPreviousProfile() {
+  const { context, elements } = createContext({
+    prof1: { value: '40' },
+    tempo1: { value: '10' },
+    prof2: { value: '5' },
+    tempo2: { value: '25' },
+    usarRep: { checked: true }
+  });
+  context.prepararMergulhoSeguinte(2);
+  assert.strictEqual(elements.get('prof2').value, '40');
+  assert.strictEqual(elements.get('tempo2').value, '10');
+}
+function testCanonicalMunicipalityDataset() {
+  const { context } = createContext();
+  const dadosMunicipios = vm.runInContext('MUNICIPIOS_PB', context);
+  assert.strictEqual(dadosMunicipios.length, 223, 'a base deve conter os 223 municípios atuais da Paraíba');
+  const altitude = nome => {
+    const item = dadosMunicipios.find(m => m.cidade === nome);
+    assert(item, 'município ausente: ' + nome);
+    return item.altitude;
+  };
+  assert.strictEqual(altitude('Araçagi'), 57);
+  assert.strictEqual(altitude('Gurjão'), 491);
+  assert.strictEqual(altitude('Mãe d\'Água'), 414);
+  assert.strictEqual(altitude('São Miguel de Taipu'), 45);
+  assert.strictEqual(altitude('Joca Claudino'), 345);
+  assert.strictEqual(altitude('São Vicente do Seridó'), null);
+  assert(!dadosMunicipios.some(m => m.cidade === 'São Bento de Pombal'), 'nome que não é município atual não deve permanecer');
+}
+function testRefutuacaoCalculation() {
+  const { context, elements } = createContext({
+    refPeso: { value: '3000' },
+    refProfundidade: { value: '10' },
+    refPressao: { value: '200' },
+    refVolume: { value: '11.2' }
+  });
+  context.calcularRefutuacao();
+  assert.strictEqual(elements.get('refLitrosNecessarios').textContent, '4500');
+  assert.strictEqual(elements.get('refLitrosCilindro').textContent, '2240');
+  assert.strictEqual(elements.get('refQuantidadeCilindros').textContent, '3');
+  assert.strictEqual(elements.get('refPressaoTotal').textContent, '402');
+  assert.strictEqual(elements.get('refAta').textContent, '2.00');
+}
 function testCoreCalculations() {
   const { context } = createContext();
   const linha = context.linhaTabela(context.profundidadeCorrigida(10, 0));
@@ -269,6 +312,29 @@ function testAlertCardsShowWhenMessagesExist() {
   assert(elements.get('previewAlertas').innerHTML.length > 0, 'card de avisos deve conter mensagens');
 }
 
+function testExactSurfaceIntervalForFortyMeterRepetitiveDive() {
+  const { context } = createContext({
+    prof1: { value: '40' },
+    tempo1: { value: '10' },
+    usarRep: { checked: true },
+    prof2: { value: '40' },
+    tempo2: { value: '6' }
+  });
+  const chain = context.computeChain();
+  assert.strictEqual(chain.dives[0].is, 236, '40 m/10 min seguido de 40 m/6 min deve exigir 236 min de IS');
+}
+
+function testCompleteSurfaceIntervalCorrelation() {
+  const { context } = createContext();
+  assert.strictEqual(context.grupoAposIntervalo('B', 77), 'A');
+  assert.strictEqual(context.grupoAposIntervalo('C', 132), 'A');
+  assert.strictEqual(context.grupoAposIntervalo('E', 235), 'B');
+  assert.strictEqual(context.grupoAposIntervalo('E', 236), 'A');
+  assert.strictEqual(context.grupoAposIntervalo('Z', 950), 'A');
+}
+testNextDiveStartsWithPreviousProfile();
+testCanonicalMunicipalityDataset();
+testRefutuacaoCalculation();
 testCoreCalculations();
 testFirstPreviewErrorsAreIndependent();
 testNitrogenComesFromSameDiveDepth();
@@ -279,10 +345,20 @@ testTtfAppearsInRepetitivePreview();
 testResidualPressureResultIncludesBar();
 testReservePressureCreatesOperationalWarningOnly();
 testNegativePressureCreatesRechargeWarningOnly();
+
+
 testManualIntervalValidationUsesNextDiveLimit();
+testExactSurfaceIntervalForFortyMeterRepetitiveDive();
+testCompleteSurfaceIntervalCorrelation();
 testFourDiveChain();
 testDecisionPanelRendersMotives();
 testEmptyAlertCardsAreHidden();
 testAlertCardsShowWhenMessagesExist();
 
 console.log('OK: testes do Dive Planner V19 concluÃ­dos.');
+
+
+
+
+
+
