@@ -387,7 +387,10 @@ function testQuickReportFormatAndOrder() {
   assert(report.includes('Profundidade real: 3.0 m'));
   assert(report.includes('Profundidade corrigida: 4 m'));
   assert(report.includes('Tempo total de fundo: 1 h 7 min (67 min)'));
-  assert(report.includes('NR: 37 min (37 min)'));
+  assert(report.includes('NR: 37 min'));
+  assert(!report.includes('NR: 37 min (37 min)'));
+  assert.strictEqual(context.formatTempoRelatorio(60), '1 h');
+  assert.strictEqual(context.formatTempoRelatorio(61), '1 h 1 min (61 min)');
   assert(!report.includes('V19'));
   assert(!report.toLowerCase().includes('pressão residual'));
 }
@@ -427,6 +430,7 @@ testEmptyAlertCardsAreHidden();
 testAlertCardsShowWhenMessagesExist();
 
 console.log('OK: testes do Dive Planner V19 concluÃ­dos.');
+
 
 
 

@@ -1312,7 +1312,8 @@ function renderResults(chain){
 
 function formatTempoRelatorio(min){
   if(!Number.isFinite(min)) return formatTempo(min);
-  return formatTempo(min) + ' (' + Math.max(0, Math.floor(Number(min))) + ' min)';
+  const total = Math.max(0, Math.floor(Number(min)));
+  return total > 60 ? formatTempo(min) + ' (' + total + ' min)' : formatTempo(min);
 }
 function nomeMunicipioRelatorio(){
   const busca = $('buscaMunicipio');
@@ -1714,7 +1715,8 @@ function renderResults(chain){
 
 function formatTempoRelatorio(min){
   if(!Number.isFinite(min)) return formatTempo(min);
-  return formatTempo(min) + ' (' + Math.max(0, Math.floor(Number(min))) + ' min)';
+  const total = Math.max(0, Math.floor(Number(min)));
+  return total > 60 ? formatTempo(min) + ' (' + total + ' min)' : formatTempo(min);
 }
 function nomeMunicipioRelatorio(){
   const busca = $('buscaMunicipio');
@@ -1935,6 +1937,7 @@ function setup(){
   setVisible('paginaResultado', false);
   atualizarPreview();
 }
+
 
 
 
