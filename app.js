@@ -270,8 +270,6 @@ function preencherMunicipios(filtro=''){
     sel.innerHTML = '<option value="">Selecionar município...</option>' +
       (prioritarios.length ? '<optgroup label="⭐ Municípios prioritários DOMAR">' + prioritarios.map(opt).join('') + '</optgroup>' : '') +
       '<optgroup label="Todos os Municípios da Paraíba">' + demais.map(opt).join('') + '</optgroup>';
-    const jp = [...sel.options].find(o=>o.dataset && o.dataset.cidade==='João Pessoa');
-    if(!termo && jp && !sel.value){ jp.selected=true; $('altitude').value=jp.value; }
   }
   if(datalist){
     datalist.innerHTML = todos.map(m => '<option value="' + m.cidade + '"></option>').join('');
