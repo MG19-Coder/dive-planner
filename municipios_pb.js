@@ -3,11 +3,11 @@
 const MUNICIPIOS_PB = [
   {
     "cidade": "Água Branca",
-    "altitude": 735.0
+    "altitude": 747.0
   },
   {
     "cidade": "Aguiar",
-    "altitude": 262.0
+    "altitude": 272.0
   },
   {
     "cidade": "Alagoa Grande",
@@ -19,11 +19,11 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Alagoinha",
-    "altitude": 133.0
+    "altitude": 142.0
   },
   {
     "cidade": "Alcantil",
-    "altitude": 500.0
+    "altitude": 519.0
   },
   {
     "cidade": "Algodão de Jandaíra",
@@ -31,7 +31,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Alhandra",
-    "altitude": 49.0
+    "altitude": 57.0
   },
   {
     "cidade": "Amparo",
@@ -39,7 +39,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Aparecida",
-    "altitude": 214.0
+    "altitude": 215.0
   },
   {
     "cidade": "Araçagi",
@@ -75,11 +75,11 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Baía da Traição",
-    "altitude": 2.0
+    "altitude": 8.0
   },
   {
     "cidade": "Bananeiras",
-    "altitude": 520.0
+    "altitude": 540.0
   },
   {
     "cidade": "Baraúna",
@@ -95,7 +95,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Barra de São Miguel",
-    "altitude": 486.0
+    "altitude": 489.0
   },
   {
     "cidade": "Bayeux",
@@ -103,11 +103,11 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Belém",
-    "altitude": 149.0
+    "altitude": 152.0
   },
   {
     "cidade": "Belém do Brejo do Cruz",
-    "altitude": 176.0
+    "altitude": 180.0
   },
   {
     "cidade": "Bernardino Batista",
@@ -115,7 +115,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Boa Ventura",
-    "altitude": 303.0
+    "altitude": 311.0
   },
   {
     "cidade": "Boa Vista",
@@ -123,7 +123,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Bom Jesus",
-    "altitude": 318.0
+    "altitude": 321.0
   },
   {
     "cidade": "Bom Sucesso",
@@ -135,7 +135,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Boqueirão",
-    "altitude": 355.0
+    "altitude": 361.0
   },
   {
     "cidade": "Borborema",
@@ -143,27 +143,27 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Brejo do Cruz",
-    "altitude": 199.0
+    "altitude": 200.0
   },
   {
     "cidade": "Brejo dos Santos",
-    "altitude": 328.0
+    "altitude": 329.0
   },
   {
     "cidade": "Caaporã",
-    "altitude": 29.0
+    "altitude": 69.0
   },
   {
     "cidade": "Cabaceiras",
-    "altitude": 388.0
+    "altitude": 389.0
   },
   {
     "cidade": "Cabedelo",
-    "altitude": 3.0
+    "altitude": 5.0
   },
   {
     "cidade": "Cachoeira dos Índios",
-    "altitude": 319.0
+    "altitude": 330.0
   },
   {
     "cidade": "Cacimba de Areia",
@@ -183,7 +183,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Cajazeiras",
-    "altitude": 298.0
+    "altitude": 306.0
   },
   {
     "cidade": "Cajazeirinhas",
@@ -191,11 +191,11 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Caldas Brandão",
-    "altitude": 75.0
+    "altitude": 83.0
   },
   {
     "cidade": "Camalaú",
-    "altitude": 521.0
+    "altitude": 554.0
   },
   {
     "cidade": "Campina Grande",
@@ -207,7 +207,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Caraúbas",
-    "altitude": 451.0
+    "altitude": 452.0
   },
   {
     "cidade": "Carrapateira",
@@ -215,7 +215,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Casserengue",
-    "altitude": 442.0
+    "altitude": 506.0
   },
   {
     "cidade": "Catingueira",
@@ -223,15 +223,15 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Catolé do Rocha",
-    "altitude": 272.0
+    "altitude": 302.0
   },
   {
     "cidade": "Caturité",
-    "altitude": 405.0
+    "altitude": 413.0
   },
   {
     "cidade": "Conceição",
-    "altitude": 376.0
+    "altitude": 383.0
   },
   {
     "cidade": "Condado",
@@ -239,7 +239,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Conde",
-    "altitude": 112.0
+    "altitude": 122.0
   },
   {
     "cidade": "Congo",
@@ -259,19 +259,19 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Cubati",
-    "altitude": 555.0
+    "altitude": 558.0
   },
   {
     "cidade": "Cuité",
-    "altitude": 649.0
+    "altitude": 665.0
   },
   {
     "cidade": "Cuité de Mamanguape",
-    "altitude": 75.0
+    "altitude": 76.0
   },
   {
     "cidade": "Cuitegi",
-    "altitude": 90.0
+    "altitude": 94.0
   },
   {
     "cidade": "Curral de Cima",
@@ -279,7 +279,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Curral Velho",
-    "altitude": 338.0
+    "altitude": 349.0
   },
   {
     "cidade": "Damião",
@@ -287,7 +287,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Desterro",
-    "altitude": 591.0
+    "altitude": 606.0
   },
   {
     "cidade": "Diamante",
@@ -295,19 +295,19 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Dona Inês",
-    "altitude": 421.0
+    "altitude": 440.0
   },
   {
     "cidade": "Duas Estradas",
-    "altitude": 144.0
+    "altitude": 145.0
   },
   {
     "cidade": "Emas",
-    "altitude": 268.0
+    "altitude": 271.0
   },
   {
     "cidade": "Esperança",
-    "altitude": 631.0
+    "altitude": 633.0
   },
   {
     "cidade": "Fagundes",
@@ -315,7 +315,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Frei Martinho",
-    "altitude": 369.0
+    "altitude": 376.0
   },
   {
     "cidade": "Gado Bravo",
@@ -323,7 +323,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Guarabira",
-    "altitude": 97.0
+    "altitude": 98.0
   },
   {
     "cidade": "Gurinhém",
@@ -335,7 +335,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Ibiara",
-    "altitude": 341.0
+    "altitude": 345.0
   },
   {
     "cidade": "Igaracy",
@@ -347,19 +347,19 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Ingá",
-    "altitude": 140.0
+    "altitude": 143.0
   },
   {
     "cidade": "Itabaiana",
-    "altitude": 45.0
+    "altitude": 46.0
   },
   {
     "cidade": "Itaporanga",
-    "altitude": 291.0
+    "altitude": 297.0
   },
   {
     "cidade": "Itapororoca",
-    "altitude": 81.0
+    "altitude": 83.0
   },
   {
     "cidade": "Itatuba",
@@ -367,7 +367,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Jacaraú",
-    "altitude": 170.0
+    "altitude": 172.0
   },
   {
     "cidade": "Jericó",
@@ -375,7 +375,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "João Pessoa",
-    "altitude": 47.0
+    "altitude": 48.0
   },
   {
     "cidade": "Joca Claudino",
@@ -383,11 +383,11 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Juarez Távora",
-    "altitude": 145.0
+    "altitude": 150.0
   },
   {
     "cidade": "Juazeirinho",
-    "altitude": 553.0
+    "altitude": 554.0
   },
   {
     "cidade": "Junco do Seridó",
@@ -395,15 +395,15 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Juripiranga",
-    "altitude": 119.0
+    "altitude": 122.0
   },
   {
     "cidade": "Juru",
-    "altitude": 580.0
+    "altitude": 588.0
   },
   {
     "cidade": "Lagoa",
-    "altitude": 273.0
+    "altitude": 281.0
   },
   {
     "cidade": "Lagoa de Dentro",
@@ -411,15 +411,15 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Lagoa Seca",
-    "altitude": 634.0
+    "altitude": 635.0
   },
   {
     "cidade": "Lastro",
-    "altitude": 336.0
+    "altitude": 337.0
   },
   {
     "cidade": "Livramento",
-    "altitude": 584.0
+    "altitude": 589.0
   },
   {
     "cidade": "Logradouro",
@@ -427,11 +427,11 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Lucena",
-    "altitude": 3.0
+    "altitude": 5.0
   },
   {
     "cidade": "Mãe d'Água",
-    "altitude": 414.0
+    "altitude": 418.0
   },
   {
     "cidade": "Malta",
@@ -447,15 +447,15 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Marcação",
-    "altitude": 89.0
+    "altitude": 93.0
   },
   {
     "cidade": "Mari",
-    "altitude": 143.0
+    "altitude": 148.0
   },
   {
     "cidade": "Marizópolis",
-    "altitude": 300.0
+    "altitude": 306.0
   },
   {
     "cidade": "Massaranduba",
@@ -463,11 +463,11 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Mataraca",
-    "altitude": 14.0
+    "altitude": 30.0
   },
   {
     "cidade": "Matinhas",
-    "altitude": 300.0
+    "altitude": 483.0
   },
   {
     "cidade": "Mato Grosso",
@@ -475,7 +475,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Maturéia",
-    "altitude": 815.0
+    "altitude": 816.0
   },
   {
     "cidade": "Mogeiro",
@@ -491,7 +491,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Monteiro",
-    "altitude": 599.0
+    "altitude": 605.0
   },
   {
     "cidade": "Mulungu",
@@ -499,15 +499,15 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Natuba",
-    "altitude": 331.0
+    "altitude": 340.0
   },
   {
     "cidade": "Nazarezinho",
-    "altitude": 272.0
+    "altitude": 288.0
   },
   {
     "cidade": "Nova Floresta",
-    "altitude": 667.0
+    "altitude": 670.0
   },
   {
     "cidade": "Nova Olinda",
@@ -519,7 +519,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Olho d'Água",
-    "altitude": 267.0
+    "altitude": 268.0
   },
   {
     "cidade": "Olivedos",
@@ -527,7 +527,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Ouro Velho",
-    "altitude": 591.0
+    "altitude": 599.0
   },
   {
     "cidade": "Parari",
@@ -535,11 +535,11 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Passagem",
-    "altitude": 305.0
+    "altitude": 308.0
   },
   {
     "cidade": "Patos",
-    "altitude": 242.0
+    "altitude": 244.0
   },
   {
     "cidade": "Paulista",
@@ -547,7 +547,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Pedra Branca",
-    "altitude": 299.0
+    "altitude": 302.0
   },
   {
     "cidade": "Pedra Lavrada",
@@ -559,7 +559,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Pedro Régis",
-    "altitude": 80.0
+    "altitude": 162.0
   },
   {
     "cidade": "Piancó",
@@ -567,11 +567,11 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Picuí",
-    "altitude": 439.0
+    "altitude": 443.0
   },
   {
     "cidade": "Pilar",
-    "altitude": 35.0
+    "altitude": 59.0
   },
   {
     "cidade": "Pilões",
@@ -579,19 +579,19 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Pilõezinhos",
-    "altitude": 133.0
+    "altitude": 144.0
   },
   {
     "cidade": "Pirpirituba",
-    "altitude": 99.0
+    "altitude": 104.0
   },
   {
     "cidade": "Pitimbu",
-    "altitude": 3.0
+    "altitude": 9.0
   },
   {
     "cidade": "Pocinhos",
-    "altitude": 646.0
+    "altitude": 657.0
   },
   {
     "cidade": "Poço Dantas",
@@ -599,19 +599,19 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Poço de José de Moura",
-    "altitude": 280.0
+    "altitude": 287.0
   },
   {
     "cidade": "Pombal",
-    "altitude": 184.0
+    "altitude": 192.0
   },
   {
     "cidade": "Prata",
-    "altitude": 577.0
+    "altitude": 588.0
   },
   {
     "cidade": "Princesa Isabel",
-    "altitude": 683.0
+    "altitude": 685.0
   },
   {
     "cidade": "Puxinanã",
@@ -619,11 +619,11 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Queimadas",
-    "altitude": 450.0
+    "altitude": 464.0
   },
   {
     "cidade": "Quixaba",
-    "altitude": 293.0
+    "altitude": 296.0
   },
   {
     "cidade": "Remígio",
@@ -647,15 +647,15 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Riacho dos Cavalos",
-    "altitude": 198.0
+    "altitude": 203.0
   },
   {
     "cidade": "Rio Tinto",
-    "altitude": 11.0
+    "altitude": 12.0
   },
   {
     "cidade": "Salgadinho",
-    "altitude": 420.0
+    "altitude": 427.0
   },
   {
     "cidade": "Salgado de São Félix",
@@ -663,27 +663,27 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Santa Cecília",
-    "altitude": 505.0
+    "altitude": 508.0
   },
   {
     "cidade": "Santa Cruz",
-    "altitude": 314.0
+    "altitude": 323.0
   },
   {
     "cidade": "Santa Helena",
-    "altitude": 287.0
+    "altitude": 292.0
   },
   {
     "cidade": "Santa Inês",
-    "altitude": 324.0
+    "altitude": 420.0
   },
   {
     "cidade": "Santa Luzia",
-    "altitude": 299.0
+    "altitude": 308.0
   },
   {
     "cidade": "Santa Rita",
-    "altitude": 16.0
+    "altitude": 68.0
   },
   {
     "cidade": "Santa Teresinha",
@@ -691,7 +691,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Santana de Mangueira",
-    "altitude": 350.0
+    "altitude": 381.0
   },
   {
     "cidade": "Santana dos Garrotes",
@@ -703,19 +703,19 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "São Bentinho",
-    "altitude": 251
+    "altitude": 259.0
   },
   {
     "cidade": "São Bento",
-    "altitude": 141.0
+    "altitude": 151.0
   },
   {
     "cidade": "São Domingos",
-    "altitude": 190.0
+    "altitude": 194.0
   },
   {
     "cidade": "São Domingos do Cariri",
-    "altitude": 400.0
+    "altitude": 409.0
   },
   {
     "cidade": "São Francisco",
@@ -735,7 +735,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "São José da Lagoa Tapada",
-    "altitude": 257.0
+    "altitude": 266.0
   },
   {
     "cidade": "São José de Caiana",
@@ -743,7 +743,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "São José de Espinharas",
-    "altitude": 208.0
+    "altitude": 210.0
   },
   {
     "cidade": "São José de Piranhas",
@@ -751,23 +751,23 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "São José de Princesa",
-    "altitude": 720.0
+    "altitude": 726.0
   },
   {
     "cidade": "São José do Bonfim",
-    "altitude": 278.0
+    "altitude": 282.0
   },
   {
     "cidade": "São José do Brejo do Cruz",
-    "altitude": 147.0
+    "altitude": 155.0
   },
   {
     "cidade": "São José do Sabugi",
-    "altitude": 333.0
+    "altitude": 342.0
   },
   {
     "cidade": "São José dos Cordeiros",
-    "altitude": 527.0
+    "altitude": 528.0
   },
   {
     "cidade": "São José dos Ramos",
@@ -775,7 +775,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "São Mamede",
-    "altitude": 263.0
+    "altitude": 275.0
   },
   {
     "cidade": "São Miguel de Taipu",
@@ -787,7 +787,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "São Sebastião do Umbuzeiro",
-    "altitude": 594.0
+    "altitude": 597.0
   },
   {
     "cidade": "São Vicente do Seridó",
@@ -807,7 +807,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Serra Grande",
-    "altitude": 593.0
+    "altitude": 614.0
   },
   {
     "cidade": "Serra Redonda",
@@ -815,7 +815,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Serraria",
-    "altitude": 533.0
+    "altitude": 538.0
   },
   {
     "cidade": "Sertãozinho",
@@ -831,15 +831,15 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Soledade",
-    "altitude": 521.0
+    "altitude": 524.0
   },
   {
     "cidade": "Sossêgo",
-    "altitude": 580.0
+    "altitude": 587.0
   },
   {
     "cidade": "Sousa",
-    "altitude": 220.0
+    "altitude": 227.0
   },
   {
     "cidade": "Sumé",
@@ -847,7 +847,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Tacima",
-    "altitude": 168
+    "altitude": 174.0
   },
   {
     "cidade": "Taperoá",
@@ -859,7 +859,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Teixeira",
-    "altitude": 768.0
+    "altitude": 787.0
   },
   {
     "cidade": "Tenório",
@@ -875,7 +875,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Umbuzeiro",
-    "altitude": 541.0
+    "altitude": 545.0
   },
   {
     "cidade": "Várzea",
@@ -887,11 +887,11 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Vista Serrana",
-    "altitude": 240.0
+    "altitude": 250.0
   },
   {
     "cidade": "Zabelê",
-    "altitude": 632.0
+    "altitude": 646.0
   }
 ];
 

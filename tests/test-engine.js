@@ -122,18 +122,18 @@ function testCanonicalMunicipalityDataset() {
   };
   assert.strictEqual(altitude('Araçagi'), 57);
   assert.strictEqual(altitude('Gurjão'), 491);
-  assert.strictEqual(altitude('Mãe d\'Água'), 414);
+  assert.strictEqual(altitude('Mãe d\'Água'), 418);
   assert.strictEqual(altitude('São Miguel de Taipu'), 45);
   assert.strictEqual(altitude('Joca Claudino'), 345);
   assert.strictEqual(altitude('São Vicente do Seridó'), 631);
-  assert.strictEqual(altitude('Casserengue'), 442);
+  assert.strictEqual(altitude('Casserengue'), 506);
   assert.strictEqual(altitude('Damião'), 602);
-  assert.strictEqual(altitude('Ingá'), 140);
-  assert.strictEqual(altitude('Nova Floresta'), 667);
+  assert.strictEqual(altitude('Ingá'), 143);
+  assert.strictEqual(altitude('Nova Floresta'), 670);
   assert.strictEqual(altitude('Riachão'), 386);
   assert.strictEqual(altitude('Riachão do Bacamarte'), 199);
-  assert.strictEqual(altitude('Santa Cecília'), 505);
-  assert.strictEqual(altitude('Santa Inês'), 324);
+  assert.strictEqual(altitude('Santa Cecília'), 508);
+  assert.strictEqual(altitude('Santa Inês'), 420);
   assert(!dadosMunicipios.some(m => m.cidade === 'São Bento de Pombal'), 'nome que não é município atual não deve permanecer');
 }
 function testRefutuacaoCalculation() {
