@@ -9,10 +9,11 @@
   "background_color": "#06111c",
   "theme_color": "#06111c",
   "icons": [
-    { "src": "domar-app-icon-v3.png", "sizes": "any", "type": "image/png", "purpose": "any maskable" },
-    { "src": "domar-app-icon-v3.png", "sizes": "any", "type": "image/png", "purpose": "any maskable" }
+    { "src": "domar-app-icon-v4.png", "sizes": "any", "type": "image/png", "purpose": "any maskable" },
+    { "src": "domar-app-icon-v4.png", "sizes": "any", "type": "image/png", "purpose": "any maskable" }
   ]
 }
+
 
 
 

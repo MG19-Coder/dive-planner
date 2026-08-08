@@ -1,5 +1,5 @@
-const CACHE_NAME = 'dive-planner-runtime-v5';
-const APP_SHELL = ['./', './index.html', './style.css', './app.js', './municipios_pb.js', './manifest.webmanifest', './icon-192.svg', './icon-512.svg', './domar-app-icon-v3.png'];
+const CACHE_NAME = 'dive-planner-runtime-v6';
+const APP_SHELL = ['./', './index.html', './style.css', './app.js', './municipios_pb.js', './manifest.webmanifest', './icon-192.svg', './icon-512.svg', './domar-app-icon-v4.png'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)).then(() => self.skipWaiting()));
@@ -17,6 +17,7 @@ self.addEventListener('fetch', event => {
     return response;
   }).catch(() => caches.match(event.request).then(response => response || caches.match('./index.html'))));
 });
+
 
 
 
