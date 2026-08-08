@@ -1,10 +1,10 @@
 {
   "name": "Dive Planner DOMAR",
-  "short_name": "Dive Planner",
+  "short_name": "Dive Planner V19",
   "description": "Planejamento operacional de mergulho DOMAR/CBMPB.",
   "lang": "pt-BR",
-  "id": "./?v=10",
-  "start_url": "./?v=10",
+  "id": "dive-planner-domar-v10",
+  "start_url": "./?v=11",
   "scope": "./",
   "display": "standalone",
   "background_color": "#06111c",
@@ -14,4 +14,5 @@
     { "src": "domar-app-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
+
 
