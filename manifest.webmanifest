@@ -9,8 +9,9 @@
   "background_color": "#06111c",
   "theme_color": "#06111c",
   "icons": [
-    { "src": "domar-logo.png", "sizes": "any", "type": "image/png", "purpose": "any maskable" },
-    { "src": "domar-logo.png", "sizes": "any", "type": "image/png", "purpose": "any maskable" }
+    { "src": "domar-logo-v2.png", "sizes": "any", "type": "image/png", "purpose": "any maskable" },
+    { "src": "domar-logo-v2.png", "sizes": "any", "type": "image/png", "purpose": "any maskable" }
   ]
 }
+
 
