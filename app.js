@@ -1338,7 +1338,7 @@ function montarRelatorio(chain){
     if(m.erros.length || m.avisos.length) linhas.push('Motivos: ' + [...m.erros, ...m.avisos].join(' | '));
   });
   linhas.push('');
-  linhas.push('STATUS OPERACIONAL: ' + (statusResumo(chain) === 'ok' ? 'PLANEJAMENTO OK' : (statusResumo(chain) === 'attention' ? 'ATENÇÃO OPERACIONAL' : 'REVISAR PLANEJAMENTO')));
+  linhas.push('Status Operacional: ' + (statusResumo(chain) === 'ok' ? 'Planejamento Correto ✅' : (statusResumo(chain) === 'attention' ? 'Atenção Operacional' : 'Revisar Planejamento')));
   return linhas.join('\n');
 }
 
@@ -1745,7 +1745,7 @@ function montarRelatorio(chain){
     if(m.erros.length || m.avisos.length) linhas.push('Motivos: ' + [...m.erros, ...m.avisos].join(' | '));
   });
   linhas.push('');
-  linhas.push('STATUS OPERACIONAL: ' + (statusResumo(chain) === 'ok' ? 'PLANEJAMENTO OK' : (statusResumo(chain) === 'attention' ? 'ATENÇÃO OPERACIONAL' : 'REVISAR PLANEJAMENTO')));
+  linhas.push('Status Operacional: ' + (statusResumo(chain) === 'ok' ? 'Planejamento Correto ✅' : (statusResumo(chain) === 'attention' ? 'Atenção Operacional' : 'Revisar Planejamento')));
   return linhas.join('\n');
 }
 
@@ -1944,6 +1944,7 @@ function setup(){
   setVisible('paginaResultado', false);
   atualizarPreview();
 }
+
 
 
 

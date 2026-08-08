@@ -394,6 +394,7 @@ function testQuickReportFormatAndOrder() {
   assert.strictEqual(context.formatTempoRelatorio(61), '1 h 1 min (61 min)');
   assert(!report.includes('V19'));
   assert(!report.toLowerCase().includes('pressão residual'));
+  assert(report.includes('Status Operacional: Planejamento Correto ✅'));
 }
 function testCompleteSurfaceIntervalCorrelation() {
   const { context } = createContext();
@@ -431,6 +432,7 @@ testEmptyAlertCardsAreHidden();
 testAlertCardsShowWhenMessagesExist();
 
 console.log('OK: testes do Dive Planner V19 concluÃ­dos.');
+
 
 
 
