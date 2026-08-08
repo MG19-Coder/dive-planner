@@ -458,3 +458,14 @@ pre{
 
 .brand h1 .version-badge{display:inline-block;margin-left:8px;padding:3px 7px;font-size:11px;line-height:1;vertical-align:middle}
 @media(max-width:760px){.brand h1 .version-badge{display:inline-block}}
+
+
+@media(max-width:760px){
+  html{scroll-padding-top:78px}
+  body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+  .app-header{padding-top:calc(12px + env(safe-area-inset-top))}
+  main{padding-bottom:calc(112px + env(safe-area-inset-bottom))}
+  .actions{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px max(10px, env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom));background:rgba(4,16,28,.96);border-top:1px solid rgba(139,216,255,.24);backdrop-filter:blur(12px)}
+  .actions button{width:min(100%,760px);margin:0 auto}
+  .panel,.card{scroll-margin-top:88px}
+}

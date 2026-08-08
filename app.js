@@ -1894,6 +1894,11 @@ function voltarRefutuacao(){
   if(entrada){ entrada.classList.add('active'); entrada.style.display='block'; }
   window.scrollTo && window.scrollTo({top:0, behavior:'smooth'});
 }
+function rolarParaMergulhoMobile(id){
+  if(window.matchMedia && window.matchMedia('(max-width:760px)').matches){
+    setTimeout(() => { const el=$(id); if(el) el.scrollIntoView({behavior:'smooth', block:'start'}); }, 80);
+  }
+}
 function setup(){
   if($('btnAbrirRefutuacao')) $('btnAbrirRefutuacao').addEventListener('click', abrirRefutuacao);
   if($('btnVoltarRefutuacao')) $('btnVoltarRefutuacao').addEventListener('click', voltarRefutuacao);
@@ -1932,13 +1937,17 @@ function setup(){
   if($('btnCalcular')) $('btnCalcular').addEventListener('click', calcular);
   if($('btnVoltar')) $('btnVoltar').addEventListener('click', voltar);
   if($('copiar')) $('copiar').addEventListener('click', copiarRelatorio);
-  if($('usarRep')) $('usarRep').addEventListener('change', () => { prepararMergulhoSeguinte(2); atualizarPreview(); });
-  if($('usarTerceiro')) $('usarTerceiro').addEventListener('change', () => { prepararMergulhoSeguinte(3); atualizarPreview(); });
-  if($('usarQuarto')) $('usarQuarto').addEventListener('change', () => { prepararMergulhoSeguinte(4); atualizarPreview(); });
+  if($('usarRep')) $('usarRep').addEventListener('change', () => { prepararMergulhoSeguinte(2); atualizarPreview(); rolarParaMergulhoMobile('repCampos'); });
+  if($('usarTerceiro')) $('usarTerceiro').addEventListener('change', () => { prepararMergulhoSeguinte(3); atualizarPreview(); rolarParaMergulhoMobile('terCampos'); });
+  if($('usarQuarto')) $('usarQuarto').addEventListener('change', () => { prepararMergulhoSeguinte(4); atualizarPreview(); rolarParaMergulhoMobile('quaCampos'); });
 
   setVisible('paginaResultado', false);
   atualizarPreview();
 }
+
+
+
+
 
 
 
