@@ -198,6 +198,31 @@ function getUsarRep(){ const el=$('usarRep'); return !!(el && el.checked); }
 function getUsarTerceiro(){ const el=$('usarTerceiro'); return getUsarRep() && !!(el && el.checked); }
 function getUsarQuarto(){ const el=$('usarQuarto'); return getUsarTerceiro() && !!(el && el.checked); }
 
+const CONSERVADOR_CONFIG = [1, 2, 3];
+function ajusteConservador(numero){
+  const conservador = $('conservador' + numero);
+  if(!conservador || !conservador.checked) return { niveis:0, frio:false, fadiga:false };
+  const frio = !!(($('frioExtremo' + numero) || {}).checked);
+  const fadiga = !!(($('fadigaExtrema' + numero) || {}).checked);
+  return { niveis:(frio ? 1 : 0) + (fadiga ? 1 : 0), frio, fadiga };
+}
+function avancarGrupo(grupo, niveis){
+  const idx = GROUP_ORDER.indexOf(grupo);
+  if(idx < 0 || !niveis) return grupo || null;
+  return GROUP_ORDER[Math.min(GROUP_ORDER.length - 1, idx + niveis)];
+}
+function atualizarControlesConservador(){
+  CONSERVADOR_CONFIG.forEach(numero => {
+    const ativo = !!(($('conservador' + numero) || {}).checked);
+    setVisible('conservadorOpcoes' + numero, ativo);
+  });
+}
+function mensagemConservador(ajuste){
+  if(!ajuste || !ajuste.niveis) return [];
+  if(ajuste.niveis >= 2) return ['Alerta de risco aumentado: frio extremo e fadiga/esforço extremo foram marcados. Recomenda-se reavaliar a continuidade da operação.'];
+  return ['Planejamento conservador aplicado.'];
+}
+
 
 const MUNICIPIOS_PRIORITARIOS_DOMAR = [
   'João Pessoa','Cabedelo','Lucena','Conde','Pitimbu','Baía da Traição','Rio Tinto','Marcação','Mataraca',
@@ -997,13 +1022,18 @@ function diveStatusLevel(dive){
 
 function setVisible(id, visible){
   const el = $(id);
-  if(el) el.style.display = visible ? '' : 'none';
+  if(!el) return;
+  el.hidden = !visible;
+  el.style.display = visible ? '' : 'none';
 }
 
-function setSituacao(id, ok){
+function setSituacao(id, ok, risco=true){
   const el = $(id);
   if(!el) return;
-  el.classList.toggle('bad', !ok);
+  el.classList.toggle('bad', !ok && risco);
+  el.classList.toggle('warn', !ok && !risco);
+  el.classList.toggle('risco', !ok && risco);
+  el.classList.toggle('atencao', !ok && !risco);
   el.classList.toggle('ok', ok);
 }
 
@@ -1037,13 +1067,15 @@ function pressureOperationalWarnings(pressureFinal){
 
 function resetPreview(n){
   if(n === 1){
-    ['previewLnd','previewGrupo','previewAutP1','previewAutB1','previewAutRem1','previewSi1','previewNgr1'].forEach(id => setText(id, '—'));
+    ['previewLnd','previewGrupo','previewGrupoAjustado','previewAutP1','previewAutB1','previewAutRem1','previewSi1','previewNgr1'].forEach(id => setText(id, '—'));
+    setVisible('previewGrupoAjustadoBox', false);
     renderAlerts('previewAlertas', []);
     setSituacao('situacaoOperacional', true);
     return;
   }
   const suffix = n === 2 ? '' : String(n);
-  [`previewLnd${n}`, `previewNrHerdado${suffix}`, `previewTtf${n}`, `previewGrupo${n}`].forEach(id => setText(id, '—'));
+  [`previewLnd${n}`, `previewNrHerdado${suffix}`, `previewTtf${n}`, `previewGrupo${n}`, `previewGrupoAjustado${n}`].forEach(id => setText(id, '—'));
+  setVisible(`previewGrupoAjustadoBox${n}`, false);
   if(n < 4){
     setText(`previewSi${n}`, '—');
     setText(`previewNgr${n}`, '—');
@@ -1218,7 +1250,7 @@ function renderFirstPreview(dive, hasSecond){
   setText('previewSi1', hasSecond && dive.intervalAfter !== null ? formatTempo(dive.intervalAfter) : '—');
   setText('previewNgr1', hasSecond && dive.ngrAfterInterval ? dive.ngrAfterInterval : '—');
   renderAlerts('previewAlertas', alerts);
-  setSituacao('situacaoOperacional', alerts.length === 0);
+  setSituacao('situacaoOperacional', alerts.length === 0, alerts.some(msg => msg !== 'Planejamento conservador aplicado.'));
 }
 
 function renderRepetitivePreview(dive, hasNext){
@@ -1237,10 +1269,11 @@ function renderRepetitivePreview(dive, hasNext){
   const alerts = [...dive.errors, ...dive.warnings];
   if(status) status.innerHTML = statusText(diveStatusLevel(dive));
   renderAlerts(`previewAlertas${n}`, alerts);
-  setSituacao(`situacaoOperacional${n}`, alerts.length === 0);
+  setSituacao(`situacaoOperacional${n}`, alerts.length === 0, alerts.some(msg => msg !== 'Planejamento conservador aplicado.'));
 }
 
 function atualizarPreview(){
+  atualizarControlesConservador();
   atualizarSiManual();
   atualizarSiManual3();
   atualizarSiManual4();
@@ -1338,6 +1371,7 @@ function montarRelatorio(chain){
     linhas.push('Tempo de fundo: ' + formatTempoRelatorio(m.tf));
     if(m.numero > 1) linhas.push('Tempo total de fundo: ' + formatTempoRelatorio(m.ttf));
     linhas.push('GR: ' + m.gr);
+    if(m.grAjustado) linhas.push('GR ajustado: ' + m.grAjustado);
     linhas.push('IS: ' + (m.is === null ? '—' : formatTempoRelatorio(m.is)));
     linhas.push('NGR: ' + (m.ngr || '—'));
     linhas.push('NR: ' + (m.nr === null ? '—' : formatTempoRelatorio(m.nr)));
@@ -1443,9 +1477,10 @@ function avisosPressaoOperacional(pressaoFinalEstimativa){
 
 function buscarMenorIntervaloSuperficie(mergulhoAtual, proximaEntrada){
   if(!mergulhoAtual || !proximaEntrada || !mergulhoAtual.linha || !proximaEntrada.linha) return null;
-  if(mergulhoAtual.erros.length || !mergulhoAtual.gr || mergulhoAtual.gr === 'FORA' || mergulhoAtual.gr === 'ACIMA LND') return null;
+  const grupoInicial = mergulhoAtual.grParaProximo || mergulhoAtual.gr;
+  if(mergulhoAtual.erros.length || !grupoInicial || grupoInicial === 'FORA' || grupoInicial === 'ACIMA LND') return null;
   for(let isMin = 10; isMin <= 950; isMin++){
-    const ngr = grupoAposIntervalo(mergulhoAtual.gr, isMin);
+    const ngr = grupoAposIntervalo(grupoInicial, isMin);
     const nr = rntPorGrupoProf(ngr, mergulhoAtual.linha);
     if(nr === null) continue;
     if(nr + proximaEntrada.tf <= proximaEntrada.lnd){
@@ -1456,7 +1491,8 @@ function buscarMenorIntervaloSuperficie(mergulhoAtual, proximaEntrada){
 }
 
 function intervaloManual(mergulhoAtual, isMin){
-  const ngr = grupoAposIntervalo(mergulhoAtual.gr, isMin);
+  const grupoInicial = mergulhoAtual.grParaProximo || mergulhoAtual.gr;
+  const ngr = grupoAposIntervalo(grupoInicial, isMin);
   const nr = rntPorGrupoProf(ngr, mergulhoAtual.linha);
   return { is:isMin, ngr, nr, automatico:false };
 }
@@ -1486,6 +1522,8 @@ function computeChain(){
 
     const ttf = nrAnterior === null ? null : nrAnterior + entrada.tf;
     const gr = entrada.linha && ttf !== null ? grupoPorTempo(entrada.linha, ttf) : '—';
+    const ajuste = ajusteConservador(config.numero);
+    const grParaProximo = ajuste.niveis && GROUP_ORDER.includes(gr) ? avancarGrupo(gr, ajuste.niveis) : null;
     if(entrada.linha && ttf !== null && ttf > entrada.lnd) erros.push(`${config.numero}º mergulho: TTF acima do LND.`);
     if(gr === 'ACIMA LND') erros.push(`${config.numero}º mergulho: grupo repetitivo acima do limite sem descompressao.`);
 
@@ -1495,6 +1533,7 @@ function computeChain(){
     const autonomiaBailoutCalculada = autonomiaBailout(tcs, entrada.profundidade, pressaoBailout);
     const pressaoFinalEstimativa = pressaoFinal(VOLUME_PRINCIPAL_S80, pressaoInicial, tcs, entrada.profundidade, entrada.tf);
     const avisos = avisosPressaoOperacional(pressaoFinalEstimativa);
+    avisos.push(...mensagemConservador(ajuste));
     if(pressaoFinalEstimativa < 0){
       erros.push(...avisos);
       avisos.length = 0;
@@ -1515,6 +1554,10 @@ function computeChain(){
       prevNr: nrAnterior,
       ttf,
       gr,
+      grReal: gr,
+      grAjustado: grParaProximo,
+      grParaProximo,
+      ajusteConservador: ajuste,
       is: null,
       intervalAfter: null,
       ngr: null,
@@ -1602,13 +1645,15 @@ function renderFirstPreview(mergulho, hasSecond){
   const alerts = [...mergulho.erros, ...mergulho.avisos];
   setText('previewLnd', formatTempo(mergulho.lnd));
   setText('previewGrupo', mergulho.gr || '—');
+  setText('previewGrupoAjustado', mergulho.grAjustado || '—');
+  setVisible('previewGrupoAjustadoBox', !!mergulho.grAjustado);
   setText('previewAutP1', formatTempo(mergulho.autonomiaPrincipal));
   setText('previewAutB1', formatTempo(mergulho.autonomiaBailout));
   setText('previewAutRem1', formatTempo(mergulho.autonomiaRemanescente));
   setText('previewSi1', hasSecond && mergulho.is !== null ? formatTempo(mergulho.is) : '—');
   setText('previewNgr1', hasSecond && mergulho.ngr ? mergulho.ngr : '—');
   renderAlerts('previewAlertas', alerts);
-  setSituacao('situacaoOperacional', alerts.length === 0);
+  setSituacao('situacaoOperacional', alerts.length === 0, alerts.some(msg => msg !== 'Planejamento conservador aplicado.'));
 }
 
 function renderRepetitivePreview(mergulho, hasNext){
@@ -1620,6 +1665,8 @@ function renderRepetitivePreview(mergulho, hasNext){
   setText(`previewNrHerdado${suffix}`, mergulho.nrAnterior === null ? '—' : formatTempo(mergulho.nrAnterior));
   setText(`previewTtf${n}`, mergulho.ttf === null ? '—' : formatTempo(mergulho.ttf));
   setText(`previewGrupo${n}`, mergulho.gr || '—');
+  setText(`previewGrupoAjustado${n}`, mergulho.grAjustado || '—');
+  setVisible(`previewGrupoAjustadoBox${n}`, !!mergulho.grAjustado);
   if(n < 4){
     setText(`previewSi${n}`, hasNext && mergulho.is !== null ? formatTempo(mergulho.is) : '—');
     setText(`previewNgr${n}`, hasNext && mergulho.ngr ? mergulho.ngr : '—');
@@ -1627,10 +1674,11 @@ function renderRepetitivePreview(mergulho, hasNext){
   const status = $(`previewStatus${n}`);
   if(status) status.innerHTML = statusText(nivelOperacional(mergulho));
   renderAlerts(`previewAlertas${n}`, alerts);
-  setSituacao(`situacaoOperacional${n}`, alerts.length === 0);
+  setSituacao(`situacaoOperacional${n}`, alerts.length === 0, alerts.some(msg => msg !== 'Planejamento conservador aplicado.'));
 }
 
 function atualizarPreview(){
+  atualizarControlesConservador();
   atualizarSiManual();
   atualizarSiManual3();
   atualizarSiManual4();
@@ -1751,6 +1799,7 @@ function montarRelatorio(chain){
     linhas.push('Tempo de fundo: ' + formatTempoRelatorio(m.tf));
     if(m.numero > 1) linhas.push('Tempo total de fundo: ' + formatTempoRelatorio(m.ttf));
     linhas.push('GR: ' + m.gr);
+    if(m.grAjustado) linhas.push('GR ajustado: ' + m.grAjustado);
     linhas.push('IS: ' + (m.is === null ? '—' : formatTempoRelatorio(m.is)));
     linhas.push('NGR: ' + (m.ngr || '—'));
     linhas.push('NR: ' + (m.nr === null ? '—' : formatTempoRelatorio(m.nr)));
@@ -1806,7 +1855,8 @@ function setup(){
     'tcs','prof1','pressaoPrincipal','pressaoBailout','altitude','tempo1',
     'usarRep','modoSi','siManual','prof2','tempo2','cilindroNovo',
     'usarTerceiro','modoSi3','siManual3','prof3','tempo3','cilindroNovo3',
-    'usarQuarto','modoSi4','siManual4','prof4','tempo4','cilindroNovo4'
+    'usarQuarto','modoSi4','siManual4','prof4','tempo4','cilindroNovo4',
+    'conservador1','frioExtremo1','fadigaExtrema1','conservador2','frioExtremo2','fadigaExtrema2','conservador3','frioExtremo3','fadigaExtrema3'
   ];
   ids.forEach(id => {
     const el = $(id);
@@ -1924,7 +1974,8 @@ function setup(){
     'tcs','prof1','pressaoPrincipal','pressaoBailout','altitude','tempo1',
     'usarRep','modoSi','siManual','prof2','tempo2','cilindroNovo',
     'usarTerceiro','modoSi3','siManual3','prof3','tempo3','cilindroNovo3',
-    'usarQuarto','modoSi4','siManual4','prof4','tempo4','cilindroNovo4'
+    'usarQuarto','modoSi4','siManual4','prof4','tempo4','cilindroNovo4',
+    'conservador1','frioExtremo1','fadigaExtrema1','conservador2','frioExtremo2','fadigaExtrema2','conservador3','frioExtremo3','fadigaExtrema3'
   ];
   ids.forEach(id => {
     const el = $(id);

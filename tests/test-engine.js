@@ -431,6 +431,63 @@ testReservePressureCreatesOperationalWarningOnly();
 testNegativePressureBlocksCalculation();
 
 
+function testConservativeDepthChains(){
+  const cases = [
+    { name:'raso progressivo', depths:['3','4','6','7'], times:['30','25','20','15'], marks:{ conservador1:true, frioExtremo1:true } },
+    { name:'medio variado', depths:['9','12','15','18'], times:['20','15','12','10'], marks:{ conservador1:true, frioExtremo1:true, fadigaExtrema1:true, conservador2:true, fadigaExtrema2:true } },
+    { name:'profundo progressivo', depths:['21','24','27','30'], times:['10','8','6','5'], marks:{ conservador1:true, frioExtremo1:true, conservador2:true, frioExtremo2:true, fadigaExtrema2:true, conservador3:true, fadigaExtrema3:true } }
+  ];
+  for (const item of cases) {
+    const overrides = {
+      prof1:{value:item.depths[0]}, tempo1:{value:item.times[0]},
+      prof2:{value:item.depths[1]}, tempo2:{value:item.times[1]}, usarRep:{checked:true},
+      prof3:{value:item.depths[2]}, tempo3:{value:item.times[2]}, usarTerceiro:{checked:true},
+      prof4:{value:item.depths[3]}, tempo4:{value:item.times[3]}, usarQuarto:{checked:true}
+    };
+    for (const [id, checked] of Object.entries(item.marks)) overrides[id] = {checked};
+    const { context } = createContext(overrides);
+    const chain = context.computeChain();
+    assert.strictEqual(chain.mergulhos.length, 4, item.name + ': quatro mergulhos devem ser processados');
+    assert(chain.mergulhos.every(d => d.linha), item.name + ': todas as profundidades devem estar nas tabelas');
+    const niveisPrimeiro = (item.marks.frioExtremo1 ? 1 : 0) + (item.marks.fadigaExtrema1 ? 1 : 0);
+    const esperadoPrimeiro = niveisPrimeiro ? context.avancarGrupo(chain.mergulhos[0].gr, niveisPrimeiro) : null;
+    assert.strictEqual(chain.mergulhos[0].grAjustado, esperadoPrimeiro, item.name + ': ajuste do 1º mergulho');
+    assert(chain.mergulhos.some(d => d.grAjustado), item.name + ': deve haver pelo menos um grupo ajustado');
+    assert(chain.mergulhos.every(d => d.gr !== d.grAjustado || !d.grAjustado), item.name + ': grupo real não deve ser substituído');
+  }
+}
+
+function testConservativeGroupAdjustment(){
+  const base = createContext({
+    prof1: { value:'5' }, tempo1:{ value:'30' },
+    prof2: { value:'5' }, tempo2:{ value:'20' }, usarRep:{ checked:true }
+  });
+  let chain = base.context.computeChain();
+  assert.strictEqual(chain.mergulhos[0].gr, 'B');
+  assert.strictEqual(chain.mergulhos[0].grAjustado, null);
+
+  const one = createContext({
+    prof1: { value:'5' }, tempo1:{ value:'30' },
+    prof2: { value:'5' }, tempo2:{ value:'20' }, usarRep:{ checked:true },
+    conservador1:{ checked:true }, frioExtremo1:{ checked:true }
+  });
+  chain = one.context.computeChain();
+  assert.strictEqual(chain.mergulhos[0].gr, 'B');
+  assert.strictEqual(chain.mergulhos[0].grAjustado, 'C');
+  assert(chain.mergulhos[0].avisos.includes('Planejamento conservador aplicado.'));
+
+  const both = createContext({
+    prof1: { value:'5' }, tempo1:{ value:'30' },
+    prof2: { value:'5' }, tempo2:{ value:'20' }, usarRep:{ checked:true },
+    conservador1:{ checked:true }, frioExtremo1:{ checked:true }, fadigaExtrema1:{ checked:true }
+  });
+  chain = both.context.computeChain();
+  assert.strictEqual(chain.mergulhos[0].grAjustado, 'D');
+  assert(chain.mergulhos[0].avisos.some(msg => msg.includes('Alerta de risco aumentado')));
+}
+
+testConservativeDepthChains();
+testConservativeGroupAdjustment();
 testManualIntervalValidationUsesNextDiveLimit();
 testExactSurfaceIntervalForFortyMeterRepetitiveDive();
 testCompleteSurfaceIntervalCorrelation();

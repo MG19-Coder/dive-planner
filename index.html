@@ -41,7 +41,7 @@
         </section>
 
         <section class="panel">
-          <div class="panel-title"><span>01</span><h2>1º Mergulho</h2></div>
+          <div class="panel-title"><span>01</span><h2>1º Mergulho</h2><div class="conservador-control"><label class="conservador-toggle"><input type="checkbox" id="conservador1"> Mergulho conservador</label><div id="conservadorOpcoes1" class="conservador-opcoes" hidden><label><input type="checkbox" id="frioExtremo1"> Frio extremo</label><label><input type="checkbox" id="fadigaExtrema1"> Fadiga/esforço extremo</label></div></div></div>
           <div class="card">
             <div class="grid two">
               <label>TCS (L/min)<input id="tcs" type="number" value="40" min="1" step="0.1"></label>
@@ -66,7 +66,7 @@
             </div>
             <div id="situacaoOperacional" class="situacao kpi-dashboard ok">
               <div><b>LND:</b> <span id="previewLnd">—</span></div>
-              <div><b>Grupo Repetitivo:</b> <span id="previewGrupo">—</span></div>
+              <div><b>GR real:</b> <span id="previewGrupo">—</span></div><div id="previewGrupoAjustadoBox" hidden><b>GR ajustado:</b> <span id="previewGrupoAjustado">—</span></div>
               <div><b>Aut. Principal:</b> <span id="previewAutP1">—</span></div>
               <div><b>Aut. Bail Out:</b> <span id="previewAutB1">—</span></div>
               <div><b>Aut. Remanescente:</b> <span id="previewAutRem1">—</span></div>
@@ -79,7 +79,7 @@
         </section>
 
         <section id="secRep" class="panel">
-          <div class="panel-title"><span>02</span><h2>2º Mergulho</h2></div>
+          <div class="panel-title"><span>02</span><h2>2º Mergulho</h2><div class="conservador-control"><label class="conservador-toggle"><input type="checkbox" id="conservador2"> Mergulho conservador</label><div id="conservadorOpcoes2" class="conservador-opcoes" hidden><label><input type="checkbox" id="frioExtremo2"> Frio extremo</label><label><input type="checkbox" id="fadigaExtrema2"> Fadiga/esforço extremo</label></div></div></div>
           <label class="switch-line"><input type="checkbox" id="usarRep"> Planejar mergulho repetitivo</label>
           <div class="card" id="repCampos">
             <div class="grid two">
@@ -98,7 +98,7 @@
               <div><b>LND:</b> <span id="previewLnd2">—</span></div>
               <div><b>NR anterior:</b> <span id="previewNrHerdado">—</span></div>
               <div><b>TTF:</b> <span id="previewTtf2">—</span></div>
-              <div><b>Grupo Repetitivo:</b> <span id="previewGrupo2">—</span></div>
+              <div><b>GR real:</b> <span id="previewGrupo2">—</span></div><div id="previewGrupoAjustadoBox2" hidden><b>GR ajustado:</b> <span id="previewGrupoAjustado2">—</span></div>
               <div><b>IS:</b> <span id="previewSi2">—</span></div>
               <div><b>Novo GR:</b> <span id="previewNgr2">—</span></div>
               <div id="previewStatus2"><b>STATUS:</b> —</div>
@@ -108,7 +108,7 @@
         </section>
 
         <section id="secTerceiro" class="panel">
-          <div class="panel-title"><span>03</span><h2>3º Mergulho</h2></div>
+          <div class="panel-title"><span>03</span><h2>3º Mergulho</h2><div class="conservador-control"><label class="conservador-toggle"><input type="checkbox" id="conservador3"> Mergulho conservador</label><div id="conservadorOpcoes3" class="conservador-opcoes" hidden><label><input type="checkbox" id="frioExtremo3"> Frio extremo</label><label><input type="checkbox" id="fadigaExtrema3"> Fadiga/esforço extremo</label></div></div></div>
           <label class="switch-line"><input type="checkbox" id="usarTerceiro"> Planejar 3º mergulho</label>
           <div class="card" id="terCampos">
             <div class="grid two">
@@ -127,7 +127,7 @@
               <div><b>LND:</b> <span id="previewLnd3">—</span></div>
               <div><b>NR anterior:</b> <span id="previewNrHerdado3">—</span></div>
               <div><b>TTF:</b> <span id="previewTtf3">—</span></div>
-              <div><b>Grupo Repetitivo:</b> <span id="previewGrupo3">—</span></div>
+              <div><b>GR real:</b> <span id="previewGrupo3">—</span></div><div id="previewGrupoAjustadoBox3" hidden><b>GR ajustado:</b> <span id="previewGrupoAjustado3">—</span></div>
               <div><b>IS:</b> <span id="previewSi3">—</span></div>
               <div><b>Novo GR:</b> <span id="previewNgr3">—</span></div>
               <div id="previewStatus3"><b>STATUS:</b> —</div>
@@ -149,7 +149,7 @@
               <div><b>LND:</b> <span id="previewLnd4">—</span></div>
               <div><b>NR anterior:</b> <span id="previewNrHerdado4">—</span></div>
               <div><b>TTF:</b> <span id="previewTtf4">—</span></div>
-              <div><b>Grupo Repetitivo:</b> <span id="previewGrupo4">—</span></div>
+              <div><b>GR real:</b> <span id="previewGrupo4">—</span></div><div id="previewGrupoAjustadoBox4" hidden><b>GR ajustado:</b> <span id="previewGrupoAjustado4">—</span></div>
               <div id="previewStatus4"><b>STATUS:</b> —</div>
               <div id="previewAlertas4" class="preview-alertas"></div>
             </div>
