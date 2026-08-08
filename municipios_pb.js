@@ -215,7 +215,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Casserengue",
-    "altitude": 0.0
+    "altitude": 442.0
   },
   {
     "cidade": "Catingueira",
@@ -283,7 +283,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Damião",
-    "altitude": 0.0
+    "altitude": 602.0
   },
   {
     "cidade": "Desterro",
@@ -347,7 +347,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Ingá",
-    "altitude": 0.0
+    "altitude": 140.0
   },
   {
     "cidade": "Itabaiana",
@@ -507,7 +507,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Nova Floresta",
-    "altitude": 666.0
+    "altitude": 667.0
   },
   {
     "cidade": "Nova Olinda",
@@ -631,11 +631,11 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Riachão",
-    "altitude": 0.0
+    "altitude": 386.0
   },
   {
     "cidade": "Riachão do Bacamarte",
-    "altitude": 0.0
+    "altitude": 199.0
   },
   {
     "cidade": "Riachão do Poço",
@@ -663,7 +663,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Santa Cecília",
-    "altitude": 0.0
+    "altitude": 505.0
   },
   {
     "cidade": "Santa Cruz",
@@ -675,7 +675,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "Santa Inês",
-    "altitude": 0.0
+    "altitude": 324.0
   },
   {
     "cidade": "Santa Luzia",

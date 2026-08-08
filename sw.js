@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dive-planner-runtime-v19';
+const CACHE_NAME = 'dive-planner-runtime-v20';
 const APP_SHELL = ["./", "./index.html", "./style.css", "./app.js", "./municipios_pb.js", "./manifest.webmanifest", "./icon-192.svg", "./icon-512.svg", "./domar-edge-icon-v14-192.png", "./domar-edge-icon-v14-512.png"];
 
 self.addEventListener('install', event => {
