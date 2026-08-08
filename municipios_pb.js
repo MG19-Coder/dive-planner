@@ -791,7 +791,7 @@ const MUNICIPIOS_PB = [
   },
   {
     "cidade": "São Vicente do Seridó",
-    "altitude": null
+    "altitude": 631.0
   },
   {
     "cidade": "Sapé",

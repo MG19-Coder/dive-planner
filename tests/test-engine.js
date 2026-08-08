@@ -125,7 +125,7 @@ function testCanonicalMunicipalityDataset() {
   assert.strictEqual(altitude('Mãe d\'Água'), 414);
   assert.strictEqual(altitude('São Miguel de Taipu'), 45);
   assert.strictEqual(altitude('Joca Claudino'), 345);
-  assert.strictEqual(altitude('São Vicente do Seridó'), null);
+  assert.strictEqual(altitude('São Vicente do Seridó'), 631);
   assert(!dadosMunicipios.some(m => m.cidade === 'São Bento de Pombal'), 'nome que não é município atual não deve permanecer');
 }
 function testRefutuacaoCalculation() {
