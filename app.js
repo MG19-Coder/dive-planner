@@ -1313,6 +1313,11 @@ function formatTempoRelatorio(min){
   const total = Math.max(0, Math.floor(Number(min)));
   return total > 60 ? formatTempo(min) + ' (' + total + ' min)' : formatTempo(min);
 }
+function formatProfundidadeRelatorio(profundidade){
+  if(!Number.isFinite(Number(profundidade))) return '—';
+  const valor = Number(profundidade);
+  return Number.isInteger(valor) ? String(valor) : String(Number(valor.toFixed(1)));
+}
 function nomeMunicipioRelatorio(){
   const busca = $('buscaMunicipio');
   const textoBusca = busca && String(busca.value || '').trim();
@@ -1323,11 +1328,12 @@ function nomeMunicipioRelatorio(){
 }
 function montarRelatorio(chain){
   const municipio = nomeMunicipioRelatorio();
-  const linhas = ['DOMAR/CBMPB', 'MERGULHO NO MUNICÍPIO ' + municipio.toUpperCase()];
+  const linhas = ['DOMAR/CBMPB', '', 'MERGULHO NO MUNICÍPIO ' + municipio.toUpperCase()];
   chain.mergulhos.forEach(m => {
     linhas.push('');
     linhas.push(m.numero + 'º MERGULHO');
-    linhas.push('Profundidade real: ' + fmt(m.profundidade, 1) + ' m');
+    linhas.push('');
+    linhas.push('Profundidade real: ' + formatProfundidadeRelatorio(m.profundidade) + ' m');
     linhas.push('Profundidade corrigida: ' + fmt(ceil0(m.profundidadeCorrigida), 0) + ' m');
     linhas.push('Tempo de fundo: ' + formatTempoRelatorio(m.tf));
     if(m.numero > 1) linhas.push('Tempo total de fundo: ' + formatTempoRelatorio(m.ttf));
@@ -1720,6 +1726,11 @@ function formatTempoRelatorio(min){
   const total = Math.max(0, Math.floor(Number(min)));
   return total > 60 ? formatTempo(min) + ' (' + total + ' min)' : formatTempo(min);
 }
+function formatProfundidadeRelatorio(profundidade){
+  if(!Number.isFinite(Number(profundidade))) return '—';
+  const valor = Number(profundidade);
+  return Number.isInteger(valor) ? String(valor) : String(Number(valor.toFixed(1)));
+}
 function nomeMunicipioRelatorio(){
   const busca = $('buscaMunicipio');
   const textoBusca = busca && String(busca.value || '').trim();
@@ -1730,11 +1741,12 @@ function nomeMunicipioRelatorio(){
 }
 function montarRelatorio(chain){
   const municipio = nomeMunicipioRelatorio();
-  const linhas = ['DOMAR/CBMPB', 'MERGULHO NO MUNICÍPIO ' + municipio.toUpperCase()];
+  const linhas = ['DOMAR/CBMPB', '', 'MERGULHO NO MUNICÍPIO ' + municipio.toUpperCase()];
   chain.mergulhos.forEach(m => {
     linhas.push('');
     linhas.push(m.numero + 'º MERGULHO');
-    linhas.push('Profundidade real: ' + fmt(m.profundidade, 1) + ' m');
+    linhas.push('');
+    linhas.push('Profundidade real: ' + formatProfundidadeRelatorio(m.profundidade) + ' m');
     linhas.push('Profundidade corrigida: ' + fmt(ceil0(m.profundidadeCorrigida), 0) + ' m');
     linhas.push('Tempo de fundo: ' + formatTempoRelatorio(m.tf));
     if(m.numero > 1) linhas.push('Tempo total de fundo: ' + formatTempoRelatorio(m.ttf));
@@ -1944,6 +1956,9 @@ function setup(){
   setVisible('paginaResultado', false);
   atualizarPreview();
 }
+
+
+
 
 
 

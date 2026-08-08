@@ -385,7 +385,8 @@ function testQuickReportFormatAndOrder() {
     mergulhos: [dive(1, 30, 30, 'A', 10, 'A', 37), dive(2, 30, 67, 'C', 10, 'C', 89)]
   });
   assert(report.indexOf('DOMAR/CBMPB') < report.indexOf('MERGULHO NO MUNICÍPIO SERRARIA'));
-  assert(report.includes('Profundidade real: 3.0 m'));
+  assert(report.includes('DOMAR/CBMPB\n\nMERGULHO NO MUNICÍPIO SERRARIA'));
+  assert(report.includes('1º MERGULHO\n\nProfundidade real: 3 m'));
   assert(report.includes('Profundidade corrigida: 4 m'));
   assert(report.includes('Tempo total de fundo: 1 h 7 min (67 min)'));
   assert(report.includes('NR: 37 min'));
@@ -432,6 +433,9 @@ testEmptyAlertCardsAreHidden();
 testAlertCardsShowWhenMessagesExist();
 
 console.log('OK: testes do Dive Planner V19 concluÃ­dos.');
+
+
+
 
 
 
