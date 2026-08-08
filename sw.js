@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dive-planner-runtime-v1';
+const CACHE_NAME = 'dive-planner-runtime-v2';
 const APP_SHELL = ['./', './index.html', './style.css', './app.js', './municipios_pb.js', './manifest.webmanifest', './icon-192.svg', './icon-512.svg'];
 
 self.addEventListener('install', event => {
@@ -17,3 +17,4 @@ self.addEventListener('fetch', event => {
     return response;
   }).catch(() => caches.match(event.request).then(response => response || caches.match('./index.html'))));
 });
+
