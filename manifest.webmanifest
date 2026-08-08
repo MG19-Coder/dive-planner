@@ -10,10 +10,11 @@
   "background_color": "#06111c",
   "theme_color": "#06111c",
   "icons": [
-    { "src": "domar-edge-icon-v13-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "domar-edge-icon-v13-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "domar-edge-icon-v12-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "domar-edge-icon-v12-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
+
 
 
 
