@@ -236,6 +236,12 @@ optgroup{background:#07111d;color:#d2efff}
   background:linear-gradient(135deg,rgba(96,20,30,.96),rgba(56,11,19,.96));
 }
 
+.situacao.erro,
+.situacao.atencao,
+.situacao.risco{
+  border-color:rgba(47,224,138,.42);
+  background:linear-gradient(135deg,rgba(9,74,49,.92),rgba(5,47,36,.92));
+}
 .situacao div{
   padding:8px 9px;
   background:rgba(0,0,0,.16);
@@ -268,6 +274,18 @@ optgroup{background:#07111d;color:#d2efff}
 .preview-alertas div{
   min-height:0;
   display:block;
+  padding:7px 9px;
+  border-radius:6px;
+}
+.preview-alertas .alerta-erro{
+  color:#ff7b83;
+  background:rgba(118,24,35,.24);
+  border:1px solid rgba(255,102,112,.42);
+}
+.preview-alertas .alerta-aviso{
+  color:#ffd78a;
+  background:rgba(124,91,21,.18);
+  border:1px solid rgba(255,197,91,.28);
 }
 .actions{
   position:sticky;
