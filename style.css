@@ -249,6 +249,19 @@ optgroup{background:#07111d;color:#d2efff}
   gap:6px;
   font-weight:850;
 }
+.parada-seguranca{
+  grid-column:1 / -1;
+  padding:7px 10px;
+  border-left:3px solid rgba(126, 205, 231, .72);
+  border-radius:5px;
+  background:rgba(26, 101, 129, .16);
+  color:#c9effa;
+  font-size:12px;
+  font-weight:700;
+  line-height:1.35;
+}
+.parada-seguranca[hidden]{display:none}
+
 .preview-alertas:empty{
   display:none;
 }

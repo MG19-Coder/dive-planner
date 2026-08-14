@@ -1067,6 +1067,7 @@ function pressureOperationalWarnings(pressureFinal){
 
 function resetPreview(n){
   if(n === 1){
+    renderParadaSeguranca('previewParada1', null);
     ['previewLnd','previewGrupo','previewGrupoAjustado','previewAutP1','previewAutB1','previewAutRem1','previewSi1','previewNgr1'].forEach(id => setText(id, '—'));
     setVisible('previewGrupoAjustadoBox', false);
     renderAlerts('previewAlertas', []);
@@ -1074,6 +1075,7 @@ function resetPreview(n){
     return;
   }
   const suffix = n === 2 ? '' : String(n);
+  renderParadaSeguranca(`previewParada${n}`, null);
   [`previewLnd${n}`, `previewNrHerdado${suffix}`, `previewTtf${n}`, `previewGrupo${n}`, `previewGrupoAjustado${n}`].forEach(id => setText(id, '—'));
   setVisible(`previewGrupoAjustadoBox${n}`, false);
   if(n < 4){
@@ -1250,6 +1252,7 @@ function renderFirstPreview(dive, hasSecond){
   setText('previewSi1', hasSecond && dive.intervalAfter !== null ? formatTempo(dive.intervalAfter) : '—');
   setText('previewNgr1', hasSecond && dive.ngrAfterInterval ? dive.ngrAfterInterval : '—');
   renderAlerts('previewAlertas', alerts);
+  renderParadaSeguranca('previewParada1', mergulho);
   setSituacao('situacaoOperacional', alerts.length === 0, alerts.some(msg => msg !== 'Planejamento conservador aplicado.'));
 }
 
@@ -1257,6 +1260,7 @@ function renderRepetitivePreview(dive, hasNext){
   if(!dive){ resetPreview(2); return; }
   const n = dive.n;
   const suffix = n === 2 ? '' : String(n);
+  renderParadaSeguranca(`previewParada${n}`, null);
   setText(`previewLnd${n}`, formatTempo(dive.lnd));
   setText(`previewNrHerdado${suffix}`, dive.prevNr === null ? '—' : formatTempo(dive.prevNr));
   setText(`previewTtf${n}`, dive.ttf === null ? '—' : formatTempo(dive.ttf));
@@ -1269,6 +1273,7 @@ function renderRepetitivePreview(dive, hasNext){
   const alerts = [...dive.errors, ...dive.warnings];
   if(status) status.innerHTML = statusText(diveStatusLevel(dive));
   renderAlerts(`previewAlertas${n}`, alerts);
+  renderParadaSeguranca(`previewParada${n}`, mergulho);
   setSituacao(`situacaoOperacional${n}`, alerts.length === 0, alerts.some(msg => msg !== 'Planejamento conservador aplicado.'));
 }
 
@@ -1640,6 +1645,15 @@ function renderAlerts(id, alerts){
   el.style.display = mensagens.length ? 'grid' : 'none';
 }
 
+function renderParadaSeguranca(id, mergulho){
+  const el = $(id);
+  if(!el) return;
+  const profundidade = mergulho && Number(mergulho.profundidade);
+  const mostrar = Number.isFinite(profundidade) && profundidade > 9;
+  el.hidden = !mostrar;
+  el.style.display = mostrar ? 'block' : 'none';
+  el.textContent = mostrar ? 'Parada de Segurança Obrigatória a 5m por 3min (Velocidade de subida 9m/min)' : '';
+}
 function renderFirstPreview(mergulho, hasSecond){
   if(!mergulho){ resetPreview(1); return; }
   const alerts = [...mergulho.erros, ...mergulho.avisos];
@@ -1653,6 +1667,7 @@ function renderFirstPreview(mergulho, hasSecond){
   setText('previewSi1', hasSecond && mergulho.is !== null ? formatTempo(mergulho.is) : '—');
   setText('previewNgr1', hasSecond && mergulho.ngr ? mergulho.ngr : '—');
   renderAlerts('previewAlertas', alerts);
+  renderParadaSeguranca('previewParada1', mergulho);
   setSituacao('situacaoOperacional', alerts.length === 0, alerts.some(msg => msg !== 'Planejamento conservador aplicado.'));
 }
 
@@ -1660,6 +1675,7 @@ function renderRepetitivePreview(mergulho, hasNext){
   if(!mergulho){ resetPreview(2); return; }
   const n = mergulho.numero;
   const suffix = n === 2 ? '' : String(n);
+  renderParadaSeguranca(`previewParada${n}`, null);
   const alerts = [...mergulho.erros, ...mergulho.avisos];
   setText(`previewLnd${n}`, formatTempo(mergulho.lnd));
   setText(`previewNrHerdado${suffix}`, mergulho.nrAnterior === null ? '—' : formatTempo(mergulho.nrAnterior));
@@ -1674,6 +1690,7 @@ function renderRepetitivePreview(mergulho, hasNext){
   const status = $(`previewStatus${n}`);
   if(status) status.innerHTML = statusText(nivelOperacional(mergulho));
   renderAlerts(`previewAlertas${n}`, alerts);
+  renderParadaSeguranca(`previewParada${n}`, mergulho);
   setSituacao(`situacaoOperacional${n}`, alerts.length === 0, alerts.some(msg => msg !== 'Planejamento conservador aplicado.'));
 }
 
