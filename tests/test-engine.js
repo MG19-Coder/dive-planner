@@ -182,7 +182,7 @@ function testFirstPreviewErrorsAreIndependent() {
   assert(!errors.some(msg => /2Âº|segundo|proximo|prÃ³ximo|repetitivo/i.test(msg)), 'preview do 1Âº nÃ£o deve receber alertas do 2Âº');
 }
 
-function testNitrogenComesFromSameDiveDepth() {
+function testNitrogenUsesUpcomingDiveDepth() {
   const { context } = createContext({
     usarRep: { checked: true },
     tempo1: { value: '5' },
@@ -193,10 +193,28 @@ function testNitrogenComesFromSameDiveDepth() {
   const chain = context.computeChain();
   const d1 = chain.dives[0];
   const d2 = chain.dives[1];
-  assert.strictEqual(d1.nrAfterInterval, context.rntPorGrupoProf(d1.ngrAfterInterval, d1.line), 'NR1 deve usar NGR + profundidade do 1Âº mergulho');
+  assert.strictEqual(d1.nrAfterInterval, context.rntPorGrupoProf(d1.ngrAfterInterval, d2.line), 'NR1 deve usar NGR + profundidade do 2º mergulho');
+  assert.notStrictEqual(d1.line.m, d2.line.m, 'o caso deve testar profundidades diferentes');
   assert.strictEqual(d2.prevNr, d1.nrAfterInterval, '2Âº mergulho deve receber NR1');
 }
 
+
+function testManualResidualNitrogenUsesUpcomingDepth() {
+  const { context } = createContext({
+    usarRep: { checked: true },
+    modoSi: { value: 'manual' },
+    siManual: { value: '10' },
+    prof1: { value: '10' },
+    tempo1: { value: '5' },
+    prof2: { value: '30' },
+    tempo2: { value: '5' }
+  });
+  const chain = context.computeChain();
+  const d1 = chain.dives[0];
+  const d2 = chain.dives[1];
+  assert.strictEqual(d1.nrAfterInterval, context.rntPorGrupoProf(d1.ngrAfterInterval, d2.line), 'NR manual deve usar a profundidade do novo mergulho');
+  assert.notStrictEqual(d1.nrAfterInterval, context.rntPorGrupoProf(d1.ngrAfterInterval, d1.line), 'NR manual não deve usar a profundidade anterior');
+}
 function testRepetitiveGroupUsesTotalBottomTime() {
   const { context } = createContext({
     usarRep: { checked: true },
@@ -421,7 +439,8 @@ testFormattedTimeShowsTotalMinutes();
 testRefutuacaoCalculation();
 testCoreCalculations();
 testFirstPreviewErrorsAreIndependent();
-testNitrogenComesFromSameDiveDepth();
+testNitrogenUsesUpcomingDiveDepth();
+testManualResidualNitrogenUsesUpcomingDepth();
 testRepetitiveGroupUsesTotalBottomTime();
 testBailoutDoesNotBlockPlanning();
 testResidualPressureDoesNotDuplicateReserveValidation();

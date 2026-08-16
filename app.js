@@ -427,7 +427,7 @@ function atualizarQuadroOperacional2(grupo1, linha1, linha2, profCorr2, lnd2, te
   if(($('modoSi')?.value || 'minimo')==='manual' && num('siManual') < 0) erros.push('Intervalo de superfície manual não pode ser negativo.');
 
   let est={siUsado:null, grupoAposSi:null, rnt:null, tempoMax2:null};
-  if(!erros.length) est=estimarRepetitivo(grupo1, linha2, lnd2, tempo2, linha1);
+  if(!erros.length) est=estimarRepetitivo(grupo1, linha2, lnd2, tempo2, linha2);
 
   const tat = est.rnt===null ? null : est.rnt + tempo2;
   setText('previewGrupo2', est.grupoAposSi || '—');
@@ -462,7 +462,7 @@ function atualizarQuadroOperacional2(grupo1, linha1, linha2, profCorr2, lnd2, te
 
 function resumoSegundoParaTerceiro(grupo1, linha1, linha2, lnd2, tempo2){
   if(!getUsarRep() || !linha2 || !grupo1 || ['FORA','ACIMA LND'].includes(grupo1)) return null;
-  const est=estimarRepetitivo(grupo1, linha2, lnd2, tempo2, linha1);
+  const est=estimarRepetitivo(grupo1, linha2, lnd2, tempo2, linha2);
   if(est.siUsado===null || est.rnt===null || est.tempoMax2===null) return null;
   const tat=tempo2 + est.rnt;
   const grupo2=grupoPorTempo(linha2, tat);
@@ -487,7 +487,7 @@ function atualizarQuadroOperacional3(resumo2, linha3, profCorr3, lnd3, tempo3){
   if(($('modoSi3')?.value || 'minimo')==='manual' && num('siManual3') < 0) erros.push('Intervalo de superfície manual após o 2º não pode ser negativo.');
 
   let est={siUsado:null, grupoAposSi:null, rnt:null, tempoMax2:null};
-  if(!erros.length) est=estimarRepetitivoComIntervalo(resumo2.grupo2, linha3, lnd3, tempo3, $('modoSi3')?.value || 'minimo', num('siManual3'), resumo2.linha2);
+  if(!erros.length) est=estimarRepetitivoComIntervalo(resumo2.grupo2, linha3, lnd3, tempo3, $('modoSi3')?.value || 'minimo', num('siManual3'), linha3);
 
   const tat = est.rnt===null ? null : est.rnt + tempo3;
   setText('previewGrupo3', est.grupoAposSi || '—');
@@ -521,7 +521,7 @@ function atualizarQuadroOperacional3(resumo2, linha3, profCorr3, lnd3, tempo3){
 
 function resumoTerceiroParaQuarto(rep2Resumo, linha3, lnd3, tempo3){
   if(!getUsarTerceiro() || !rep2Resumo || !rep2Resumo.ok || !linha3 || !rep2Resumo.grupo2 || ['FORA','ACIMA LND'].includes(rep2Resumo.grupo2)) return null;
-  const est=estimarRepetitivoComIntervalo(rep2Resumo.grupo2, linha3, lnd3, tempo3, $('modoSi3')?.value || 'minimo', num('siManual3'), rep2Resumo.linha2);
+  const est=estimarRepetitivoComIntervalo(rep2Resumo.grupo2, linha3, lnd3, tempo3, $('modoSi3')?.value || 'minimo', num('siManual3'), linha3);
   if(est.siUsado===null || est.rnt===null || est.tempoMax2===null) return null;
   const tat=tempo3 + est.rnt;
   const grupo3=grupoPorTempo(linha3, tat);
@@ -683,7 +683,7 @@ function calcularRepetitivo(grupo1, alt){
     return {ok:false};
   }
 
-  const estimativa = estimarRepetitivo(grupo1, linha2, lnd2, tempo2, linha1);
+  const estimativa = estimarRepetitivo(grupo1, linha2, lnd2, tempo2, linha2);
   const {siUsado, grupoAposSi, rnt, tempoMax2} = estimativa;
 
   if(siUsado===null || rnt===null || tempoMax2===null){
@@ -768,7 +768,7 @@ function calcularTerceiro(rep2, alt){
     return {ok:false};
   }
 
-  const estimativa = estimarRepetitivoComIntervalo(rep2.grupo2, linha3, lnd3, tempo3, modoSi, num('siManual3'), rep2.linha2);
+  const estimativa = estimarRepetitivoComIntervalo(rep2.grupo2, linha3, lnd3, tempo3, modoSi, num('siManual3'), linha3);
   const {siUsado, grupoAposSi, rnt, tempoMax2} = estimativa;
 
   if(siUsado===null || rnt===null || tempoMax2===null){
@@ -849,7 +849,7 @@ function calcularQuarto(rep3, alt){
     return {ok:false};
   }
 
-  const estimativa = estimarRepetitivoComIntervalo(rep3.grupo3, linha4, lnd4, tempo4, modoSi, num('siManual4'), rep3.linha3);
+  const estimativa = estimarRepetitivoComIntervalo(rep3.grupo3, linha4, lnd4, tempo4, modoSi, num('siManual4'), linha4);
   const {siUsado, grupoAposSi, rnt, tempoMax2} = estimativa;
 
   if(siUsado===null || rnt===null || tempoMax2===null){
@@ -1107,7 +1107,7 @@ function findMinimumSurfaceInterval(currentDive, nextDiveInput){
   const nextLnd = lndDaLinha(nextDiveInput.line);
   for(let si = 10; si <= 950; si++){
     const ngr = grupoAposIntervalo(currentDive.gr, si);
-    const nr = rntPorGrupoProf(ngr, currentDive.line);
+    const nr = rntPorGrupoProf(ngr, nextDiveInput.line);
     if(nr === null) continue;
     if(nr + nextDiveInput.tempo <= nextLnd){
       return { si, ngr, nr, source:'auto' };
@@ -1116,9 +1116,9 @@ function findMinimumSurfaceInterval(currentDive, nextDiveInput){
   return null;
 }
 
-function manualSurfaceInterval(currentDive, si){
+function manualSurfaceInterval(currentDive, si, nextDiveInput){
   const ngr = grupoAposIntervalo(currentDive.gr, si);
-  const nr = rntPorGrupoProf(ngr, currentDive.line);
+  const nr = rntPorGrupoProf(ngr, nextDiveInput.line);
   return { si, ngr, nr, source:'manual' };
 }
 
@@ -1205,7 +1205,7 @@ function computeChain(){
       const nextInput = inputs.get(n + 1);
       let interval = null;
       if(mode === 'manual'){
-        interval = manualSurfaceInterval(dive, manualSi);
+        interval = manualSurfaceInterval(dive, manualSi, nextDiveInput);
         if(interval.nr === null) dive.intervalErrorForNext = `IS após o ${n}º mergulho não gerou NR válido.`;
       }else{
         interval = findMinimumSurfaceInterval(dive, nextInput);
@@ -1491,7 +1491,7 @@ function buscarMenorIntervaloSuperficie(mergulhoAtual, proximaEntrada){
   if(mergulhoAtual.erros.length || !grupoInicial || grupoInicial === 'FORA' || grupoInicial === 'ACIMA LND') return null;
   for(let isMin = 10; isMin <= 950; isMin++){
     const ngr = grupoAposIntervalo(grupoInicial, isMin);
-    const nr = rntPorGrupoProf(ngr, mergulhoAtual.linha);
+    const nr = rntPorGrupoProf(ngr, proximaEntrada.linha);
     if(nr === null) continue;
     if(nr + proximaEntrada.tf <= proximaEntrada.lnd){
       return { is:isMin, ngr, nr, automatico:true };
@@ -1500,10 +1500,10 @@ function buscarMenorIntervaloSuperficie(mergulhoAtual, proximaEntrada){
   return null;
 }
 
-function intervaloManual(mergulhoAtual, isMin){
+function intervaloManual(mergulhoAtual, isMin, proximaEntrada){
   const grupoInicial = mergulhoAtual.grParaProximo || mergulhoAtual.gr;
   const ngr = grupoAposIntervalo(grupoInicial, isMin);
-  const nr = rntPorGrupoProf(ngr, mergulhoAtual.linha);
+  const nr = rntPorGrupoProf(ngr, proximaEntrada.linha);
   return { is:isMin, ngr, nr, automatico:false };
 }
 
@@ -1599,7 +1599,7 @@ function computeChain(){
       const proximaEntrada = entradas.get(config.numero + 1);
       let intervalo = null;
       if(modo === 'manual'){
-        intervalo = intervaloManual(mergulho, num(intervaloCfg.siId));
+        intervalo = intervaloManual(mergulho, num(intervaloCfg.siId), proximaEntrada);
         if(intervalo.nr === null) mergulho.erroIntervaloParaProximo = `IS apos o ${config.numero}º mergulho nao gerou NR valido.`;
         if(intervalo.nr !== null && proximaEntrada && intervalo.nr + proximaEntrada.tf > proximaEntrada.lnd){
           mergulho.erroIntervaloParaProximo = `IS apos o ${config.numero}º mergulho nao permite o proximo mergulho dentro do LND.`;
