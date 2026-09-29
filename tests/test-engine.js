@@ -166,8 +166,10 @@ function testCoreCalculations() {
   assert.strictEqual(context.lndDaLinha(linha), 232);
   assert.strictEqual(context.grupoPorTempo(linha, 14), 'A');
   assert.strictEqual(context.autonomiaPrincipal(30, 10, 200), 28);
+  assert.strictEqual(context.autonomiaPrincipal(30, 20, 200), 18, 'autonomia principal deve considerar a profundidade do mergulho repetitivo');
   assert.strictEqual(context.autonomiaPrincipal(30, 10, 199), 27, 'autonomia principal deve arredondar para baixo');
   assert.strictEqual(context.autonomiaBailout(30, 10, 200), 9, 'autonomia Bail Out deve arredondar para baixo');
+  assert.strictEqual(context.autonomiaBailout(30, 20, 200), 6, 'autonomia Bail Out deve considerar a profundidade do mergulho repetitivo');
   assert.strictEqual(context.pressaoFinal(11.2, 200, 30, 10, 10), 146);
   assert.strictEqual(context.formatTempo(61), '1 h 1 min');
   assert.strictEqual(context.formatTempo(125), '2 h 5 min');

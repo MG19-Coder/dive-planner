@@ -1327,6 +1327,9 @@ function renderResults(chain){
   const d1 = byN.get(1);
   setText('profCorr1', d1 ? fmt(ceil0(d1.profCorr), 0) : '—');
   setText('tempoFundo1', d1 ? formatTempo(d1.tempo) : '—');
+  setText('autPrincipalResultado1', d1 ? formatTempo(d1.autonomiaPrincipal) : '—');
+  setText('autBailoutResultado1', d1 ? formatTempo(d1.autonomiaBailout) : '—');
+  setText('autRemanescenteResultado1', d1 ? formatTempo(d1.autonomiaRemanescente) : '—');
   setText('siUsado1', resultIntervalText(d1));
   setText('grupoAposSi1', resultNgrText(d1));
   setText('nrPrimeiro', resultNrText(d1));
@@ -1334,15 +1337,18 @@ function renderResults(chain){
   setText('obs1', d1 ? ([...d1.errors, ...d1.warnings].join(' ') || 'Pressão residual estimada pelo consumo planejado do cilindro principal.') : '');
 
   [
-    { n:2, sec:'secRepResultado', prof:'profCorr2', tat:'tat2', si:'siUsado', ngr:'grupoAposSi', nr:'rnt', press:'pressaoFinal2', obs:'obs2' },
-    { n:3, sec:'secRep3Resultado', prof:'profCorr3', tat:'tat3', si:'siUsado3', ngr:'grupoAposSi3', nr:'rnt3', press:'pressaoFinal3', obs:'obs3' },
-    { n:4, sec:'secRep4Resultado', prof:'profCorr4', tat:'tat4', si:'siUsado4', ngr:'grupoAposSi4', nr:'rnt4', press:'pressaoFinal4', obs:'obs4' }
+    { n:2, sec:'secRepResultado', prof:'profCorr2', tat:'tat2', autP:'autPrincipal2', autB:'autBailout2', autRem:'autRemanescente', si:'siUsado', ngr:'grupoAposSi', nr:'rnt', press:'pressaoFinal2', obs:'obs2' },
+    { n:3, sec:'secRep3Resultado', prof:'profCorr3', tat:'tat3', autP:'autPrincipal3', autB:'autBailout3', autRem:'autRemanescente3', si:'siUsado3', ngr:'grupoAposSi3', nr:'rnt3', press:'pressaoFinal3', obs:'obs3' },
+    { n:4, sec:'secRep4Resultado', prof:'profCorr4', tat:'tat4', autP:'autPrincipal4', autB:'autBailout4', autRem:'autRemanescente4', si:'siUsado4', ngr:'grupoAposSi4', nr:'rnt4', press:'pressaoFinal4', obs:'obs4' }
   ].forEach(cfg => {
     const d = byN.get(cfg.n);
     setVisible(cfg.sec, !!d);
     if(!d) return;
     setText(cfg.prof, fmt(ceil0(d.profCorr), 0));
     setText(cfg.tat, d.ttf === null ? '—' : formatTempo(d.ttf));
+    setText(cfg.autP, formatTempo(d.autonomiaPrincipal));
+    setText(cfg.autB, formatTempo(d.autonomiaBailout));
+    setText(cfg.autRem, formatTempo(d.autonomiaRemanescente));
     setText(cfg.si, resultIntervalText(d));
     setText(cfg.ngr, resultNgrText(d));
     setText(cfg.nr, resultNrText(d));
@@ -1690,6 +1696,9 @@ function renderRepetitivePreview(mergulho, hasNext){
   setText(`previewLnd${n}`, formatTempo(mergulho.lnd));
   setText(`previewNrHerdado${suffix}`, mergulho.nrAnterior === null ? '—' : formatTempo(mergulho.nrAnterior));
   setText(`previewTtf${n}`, mergulho.ttf === null ? '—' : formatTempo(mergulho.ttf));
+  setText(`previewAutP${n}`, formatTempo(mergulho.autonomiaPrincipal));
+  setText(`previewAutB${n}`, formatTempo(mergulho.autonomiaBailout));
+  setText(`previewAutRem${n}`, formatTempo(mergulho.autonomiaRemanescente));
   setText(`previewGrupo${n}`, mergulho.gr || '—');
   setText(`previewGrupoAjustado${n}`, mergulho.grAjustado || '—');
   setVisible(`previewGrupoAjustadoBox${n}`, !!mergulho.grAjustado);
