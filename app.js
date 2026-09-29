@@ -1662,7 +1662,7 @@ function renderParadaSeguranca(id, mergulho){
   const mostrar = Number.isFinite(profundidade) && profundidade > 9;
   el.hidden = !mostrar;
   el.style.display = mostrar ? 'block' : 'none';
-  el.textContent = mostrar ? 'Parada de Segurança Obrigatória a 5m por 3min (Velocidade de subida 9m/min)' : '';
+  el.textContent = mostrar ? 'Parada de Segurança Obrigatória a 5m por 3min (Velocidade de subida 18m/min)' : '';
 }
 function renderFirstPreview(mergulho, hasSecond){
   if(!mergulho){ resetPreview(1); return; }
@@ -1950,16 +1950,21 @@ function calcularRefutuacao(){
   const pressao = num('refPressao');
   const volume = num('refVolume');
   if(peso < 0 || profundidade < 0 || pressao <= 0 || volume <= 0){
-    ['refLitrosNecessarios','refLitrosCilindro','refQuantidadeCilindros','refPressaoTotal','refAta'].forEach(id=>setText(id,'—'));
+    ['refLitrosNecessarios','refLitrosCilindro','refLitrosCilindroProfundidade','refQuantidadeCilindros','refPressaoTotal','refAta'].forEach(id=>setText(id,'—'));
     return;
   }
   const ataAbsoluta = 1 + (profundidade / 10);
-  const litrosNecessarios = peso * 0.75 * ataAbsoluta;
+  const volumeNecessarioNaProfundidade = peso * 0.75;
+  const litrosNecessarios = volumeNecessarioNaProfundidade * ataAbsoluta;
   const litrosPorCilindro = volume * pressao;
-  const quantidadeCilindros = litrosNecessarios > 0 ? Math.ceil(litrosNecessarios / litrosPorCilindro) : 0;
+  const litrosPorCilindroNaProfundidade = litrosPorCilindro / ataAbsoluta;
+  const quantidadeCilindros = volumeNecessarioNaProfundidade > 0
+    ? Math.ceil(volumeNecessarioNaProfundidade / litrosPorCilindroNaProfundidade)
+    : 0;
   const pressaoTotal = litrosNecessarios / volume;
   setText('refLitrosNecessarios', fmt(litrosNecessarios, 0));
   setText('refLitrosCilindro', fmt(litrosPorCilindro, 0));
+  setText('refLitrosCilindroProfundidade', fmt(litrosPorCilindroNaProfundidade, 0));
   setText('refQuantidadeCilindros', fmt(quantidadeCilindros, 0));
   setText('refPressaoTotal', fmt(pressaoTotal, 0));
   setText('refAta', fmt(ataAbsoluta, 2));
